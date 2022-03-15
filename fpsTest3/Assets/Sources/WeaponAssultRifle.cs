@@ -282,6 +282,7 @@ public class WeaponAssultRifle : MonoBehaviour
 
             if(hit.transform.CompareTag("Enemy"))
             {
+                hit.rigidbody.AddForceAtPosition(new Vector3(10f, 0, 0), hit.transform.position);
                 hit.transform.GetComponent<EnemyFSM>().TakeDamage(weaponStatus.damage);
             }
             else if(hit.transform.CompareTag("ExplosiveObject"))

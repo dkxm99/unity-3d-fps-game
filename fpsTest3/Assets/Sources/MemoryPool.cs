@@ -19,6 +19,8 @@ public class MemoryPool : MonoBehaviour
     public int MaxCount => maxCount;
     public int ActiveCount => activeCount;
 
+   // private Vector3 tempPosition = new Vector3(48, 1, 48);
+
     public MemoryPool(GameObject poolObject)
     {
         maxCount = 0;
@@ -41,7 +43,7 @@ public class MemoryPool : MonoBehaviour
             poolItem.isActive = false;
             poolItem.gameObject = GameObject.Instantiate(poolObject);
             poolItem.gameObject.SetActive(false);
-
+            //poolItem.gameObject.transform.position = tempPosition;
             poolItemList.Add(poolItem);
         }
     }
@@ -96,6 +98,7 @@ public class MemoryPool : MonoBehaviour
             {
                 activeCount--;
 
+                //poolItem.gameObject.transform.position = tempPosition;
                 poolItem.isActive = false;
                 poolItem.gameObject.SetActive(false);
             }
@@ -113,6 +116,7 @@ public class MemoryPool : MonoBehaviour
 
             if (poolItem.gameObject != null && poolItem.isActive == true)
             {
+                //poolItem.gameObject.transform.position = tempPosition;
                 poolItem.isActive = false;
                 poolItem.gameObject.SetActive(false);
             }

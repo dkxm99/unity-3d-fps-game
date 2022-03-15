@@ -37,18 +37,23 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        UpdateRotate();
-        UpdateMove();
-        UpdateJump();
-        UpdateWeaponAction();
+        if (Time.timeScale != 0f)
+        {
+            UpdateRotate();
+            UpdateMove();
+            UpdateJump();
+            UpdateWeaponAction();
+        }
     }
 
     private void UpdateRotate()
     {
+
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
 
         rotateToMouse.updateRotate(mouseX, mouseY);
+
     }
 
     private void UpdateMove()
