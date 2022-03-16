@@ -21,7 +21,8 @@ public class PlayerController : MonoBehaviour
     private PlayerStatus playerStatus;
     //private AnimatorController animatorController;
     private AudioSource audioSource;
-    private WeaponAssultRifle weaponAssultRifle;
+    //private WeaponAssultRifle weapon;
+    private WeaponSystem weapon;
 
     private void Awake()
     {
@@ -32,7 +33,8 @@ public class PlayerController : MonoBehaviour
         playerStatus = GetComponent<PlayerStatus>();
         //animatorController = GetComponent<AnimatorController>();
         audioSource = GetComponent<AudioSource>();
-        weaponAssultRifle = GetComponentInChildren<WeaponAssultRifle>();
+        //weapon = GetComponentInChildren<WeaponAssultRifle>();
+        //weaponSystem = GetComponentInChildren<WeaponSystem>();
     }
 
     private void Update()
@@ -65,15 +67,15 @@ public class PlayerController : MonoBehaviour
         {
             bool isRun = false;
             if (v > 0) isRun = Input.GetKey(keyCodeRun);
-            if(isRun == true && weaponAssultRifle.AnimatorController.AimModeIs == true)
+            if(isRun == true && weapon.AnimatorController.AimModeIs == true)
             {
-                weaponAssultRifle.AnimatorController.AimModeIs = false;
-                weaponAssultRifle.mainCamera.fieldOfView = weaponAssultRifle.defaultFOV;       
-                weaponAssultRifle.aimImage.enabled = !weaponAssultRifle.aimImage.enabled;
+                weapon.AnimatorController.AimModeIs = false;
+                weapon.mainCamera.fieldOfView = weapon.defaultFOV;       
+                weapon.aimImage.enabled = !weapon.aimImage.enabled;
             }
 
             playerMovement.MoveSpeed = isRun == true ? playerStatus.RunSpeed : playerStatus.WalkSpeed;
-            weaponAssultRifle.AnimatorController.MoveSpeed = isRun == true ? 1 : 0.5f;
+            weapon.AnimatorController.MoveSpeed = isRun == true ? 1 : 0.5f;
             audioSource.clip = isRun == true ? audioClipRun : audioClipWalk;
 
             if (audioSource.isPlaying == false)
@@ -85,7 +87,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             playerMovement.MoveSpeed = 0;
-            weaponAssultRifle.AnimatorController.MoveSpeed = 0;
+            weapon.AnimatorController.MoveSpeed = 0;
 
             if (audioSource.isPlaying == true)
             {
@@ -108,28 +110,28 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            weaponAssultRifle.StartWeaponAction(0);
+            weapon.StartWeaponAction(0);
         }
         else if (Input.GetMouseButtonUp(0))
         {
-            weaponAssultRifle.StopWeaponAction(0);
+            weapon.StopWeaponAction(0);
         }
         if (Input.GetMouseButtonDown(1))
         {
             /*rotateToMouse.rotCamXAxisSpeed = 2;
             rotateToMouse.rotCamYAxisSpeed = 1;*/
-            weaponAssultRifle.StartWeaponAction(1);
+            weapon.StartWeaponAction(1);
             
         }
         else if (Input.GetMouseButtonUp(1))
         {  
-            weaponAssultRifle.StopWeaponAction(1);
+            weapon.StopWeaponAction(1);
            /* rotateToMouse.rotCamXAxisSpeed = 5;
             rotateToMouse.rotCamYAxisSpeed = 3;*/
         }
         if (Input.GetKeyDown(KeyCodeReload))
         {
-            weaponAssultRifle.StartReload();
+            weapon.StartReload();
         }
     }
 
@@ -140,5 +142,10 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("GameOver");
         }
+    }
+
+    public void SwitchingWeapon(WeaponSystem newWeapon)
+    {
+        weapon = newWeapon;
     }
 }

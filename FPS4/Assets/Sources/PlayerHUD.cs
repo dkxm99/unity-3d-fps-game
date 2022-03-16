@@ -6,9 +6,9 @@ using TMPro;
 
 public class PlayerHUD : MonoBehaviour
 {
+    private WeaponSystem weapon;
+
     [Header("Components")]
-    [SerializeField]
-    private WeaponAssultRifle weapon;
     [SerializeField]
     private PlayerStatus status;
 
@@ -19,6 +19,8 @@ public class PlayerHUD : MonoBehaviour
     private Image imageWeaponIcon;
     [SerializeField]
     private Sprite[] spriteWeaponIcons;
+    [SerializeField]
+    private Vector2[] weaponSizeIcons;
 
     [Header("Ammo")]
     [SerializeField]
@@ -34,14 +36,30 @@ public class PlayerHUD : MonoBehaviour
 
     private void Awake()
     {
-        SetupWeapon();
+        //SetupWeapon();
         weapon.ammoEvent.AddListener(UpdateAmmoHUD);
         status.hpEvent.AddListener(UpdateHpHUD);
     }
+
+    public void SetupAllWeapon(WeaponSystem[] weapons)
+    {
+        for(int i = 0; i < weapons.Length; ++i)
+        {
+            weapons[i].ammoEvent.AddListener(UpdateAmmoHUD);
+        }
+    }
+
+    public void SwitchingWeapon(WeaponSystem newWeapon)
+    {
+        weapon = newWeapon;
+
+        SetupWeapon();
+    }
     private void SetupWeapon()
     {
-        textWeaponName.text = weapon.weaponName.ToString();
-        imageWeaponIcon.sprite = spriteWeaponIcons[(int)weapon.weaponName];
+        textWeaponName.text = weapon.WeaponName.ToString();
+        imageWeaponIcon.sprite = spriteWeaponIcons[(int)weapon.WeaponName];
+        imageWeaponIcon.rectTransform.sizeDelta = weaponSizeIcons[(int)weapon.WeaponName];
     }
 
     private void UpdateAmmoHUD(int currentAmmo, int currentMaxAmmo)

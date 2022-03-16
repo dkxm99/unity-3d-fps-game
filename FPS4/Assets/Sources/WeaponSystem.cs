@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum WeaponType{Main = 0, Sub, Melee, Throw }
 
@@ -17,6 +18,17 @@ public abstract class WeaponSystem : MonoBehaviour
     protected WeaponType weaponType;
     [SerializeField]
     protected WeaponStatus weaponStatus;
+
+    [HideInInspector]
+    public float defaultFOV = 60;
+    public float aimFOV = 30;
+    [HideInInspector]
+    public Camera mainCamera;
+
+
+    [Header("AimUi")]
+    [SerializeField]
+    public Image aimImage;
 
     protected float lastAttackTime = 0;
     protected bool isReload = false;

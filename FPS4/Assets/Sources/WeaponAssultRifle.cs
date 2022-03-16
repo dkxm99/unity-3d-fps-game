@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[System.Serializable]
-//public class AmmoEvent : UnityEngine.Events.UnityEvent<int, int> { }
+/*[System.Serializable]
+public class AmmoEvent : UnityEngine.Events.UnityEvent<int, int> { }*/
 public class WeaponAssultRifle : WeaponSystem
 {
     /*[HideInInspector]
@@ -34,7 +34,7 @@ public class WeaponAssultRifle : WeaponSystem
     [SerializeField]
     private WeaponStatus weaponStatus;*/
 
-    [Header("AimUi")]
+    /*[Header("AimUi")]
     [SerializeField]
     public Image aimImage;
 
@@ -43,20 +43,19 @@ public class WeaponAssultRifle : WeaponSystem
     public bool isAttack = false;*/
     public bool isModChange = false;
 
-    [HideInInspector]
-    public float defaultFOV = 60;
-    public float aimFOV = 30;
-
     /*private AudioSource audioSource;
     private AnimatorController animatorController;*/
     private CasingMemoryPool casingMemoryPool;
     private ImpactMemoryPool impactMemoryPool;
     private PlayerMovement playerMovement;
 
+    /*[HideInInspector]
+    public float defaultFOV = 60;
+    public float aimFOV = 30;
     [HideInInspector]
-    public Camera mainCamera;
+    public Camera mainCamera;*/
 
-    public WeaponName weaponName => weaponStatus.weaponName;
+    //public WeaponName weaponName => weaponStatus.weaponName;
 
     private void Awake()
     {
@@ -66,7 +65,7 @@ public class WeaponAssultRifle : WeaponSystem
         animatorController = GetComponentInParent<AnimatorController>();*/
         casingMemoryPool = GetComponent<CasingMemoryPool>();
         impactMemoryPool = GetComponent<ImpactMemoryPool>();
-        //playerMovement = GetComponentInParent<PlayerMovement>();
+        playerMovement = GetComponentInParent<PlayerMovement>();
         mainCamera = Camera.main;
 
         weaponStatus.currentAmmo = weaponStatus.maxAmmo;
