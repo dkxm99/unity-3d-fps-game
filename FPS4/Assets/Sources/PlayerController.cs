@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     private PlayerMovement playerMovement;
     private RotateToMouse rotateToMouse;
     private PlayerStatus playerStatus;
-    private AnimatorController animatorController;
+    //private AnimatorController animatorController;
     private AudioSource audioSource;
     private WeaponAssultRifle weaponAssultRifle;
 
@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
         rotateToMouse = GetComponent<RotateToMouse>();
         playerMovement = GetComponent<PlayerMovement>();
         playerStatus = GetComponent<PlayerStatus>();
-        animatorController = GetComponent<AnimatorController>();
+        //animatorController = GetComponent<AnimatorController>();
         audioSource = GetComponent<AudioSource>();
         weaponAssultRifle = GetComponentInChildren<WeaponAssultRifle>();
     }
@@ -65,15 +65,15 @@ public class PlayerController : MonoBehaviour
         {
             bool isRun = false;
             if (v > 0) isRun = Input.GetKey(keyCodeRun);
-            if(isRun == true && animatorController.AimModeIs == true)
+            if(isRun == true && weaponAssultRifle.AnimatorController.AimModeIs == true)
             {
-                animatorController.AimModeIs = false;
+                weaponAssultRifle.AnimatorController.AimModeIs = false;
                 weaponAssultRifle.mainCamera.fieldOfView = weaponAssultRifle.defaultFOV;       
                 weaponAssultRifle.aimImage.enabled = !weaponAssultRifle.aimImage.enabled;
             }
 
             playerMovement.MoveSpeed = isRun == true ? playerStatus.RunSpeed : playerStatus.WalkSpeed;
-            animatorController.MoveSpeed = isRun == true ? 1 : 0.5f;
+            weaponAssultRifle.AnimatorController.MoveSpeed = isRun == true ? 1 : 0.5f;
             audioSource.clip = isRun == true ? audioClipRun : audioClipWalk;
 
             if (audioSource.isPlaying == false)
@@ -85,7 +85,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             playerMovement.MoveSpeed = 0;
-            animatorController.MoveSpeed = 0;
+            weaponAssultRifle.AnimatorController.MoveSpeed = 0;
 
             if (audioSource.isPlaying == true)
             {

@@ -24,9 +24,15 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
+    public void StartGame()
+    {
+        SceneManager.LoadScene("InGame");
+        Cursor.visible = false;
+    }
     public void Resume()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         isPaused = false;
@@ -35,6 +41,7 @@ public class PauseMenu : MonoBehaviour
     public void Pause()
     {
         Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         isPaused = true;
@@ -43,14 +50,10 @@ public class PauseMenu : MonoBehaviour
     public void Menu()
     {
         SceneManager.LoadScene("MainMenu");
+        Cursor.visible = true;
     }
     public void Exit()
     {
         Application.Quit();
-    }
-
-    public void StartGame()
-    {
-        SceneManager.LoadScene("InGame");
     }
 }

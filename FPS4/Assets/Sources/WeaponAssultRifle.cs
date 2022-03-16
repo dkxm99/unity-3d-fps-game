@@ -4,11 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [System.Serializable]
-public class AmmoEvent : UnityEngine.Events.UnityEvent<int, int> { }
-public class WeaponAssultRifle : MonoBehaviour
+//public class AmmoEvent : UnityEngine.Events.UnityEvent<int, int> { }
+public class WeaponAssultRifle : WeaponSystem
 {
-    [HideInInspector]
-    public AmmoEvent ammoEvent = new AmmoEvent();
+    /*[HideInInspector]
+    public AmmoEvent ammoEvent = new AmmoEvent();*/
 
     [Header("Fire Effect")]
     [SerializeField]
@@ -30,25 +30,25 @@ public class WeaponAssultRifle : MonoBehaviour
     [SerializeField]
     private AudioClip audioClipAim;
 
-    [Header("Weapon Setting")]
+    /*[Header("Weapon Setting")]
     [SerializeField]
-    private WeaponStatus weaponStatus;
+    private WeaponStatus weaponStatus;*/
 
     [Header("AimUi")]
     [SerializeField]
     public Image aimImage;
 
-    private float lastAttackTime = 0;
+    /*private float lastAttackTime = 0;
     private bool isReload = false;
-    public bool isAttack = false;
+    public bool isAttack = false;*/
     public bool isModChange = false;
 
     [HideInInspector]
     public float defaultFOV = 60;
     public float aimFOV = 30;
 
-    private AudioSource audioSource;
-    private AnimatorController animatorController;
+    /*private AudioSource audioSource;
+    private AnimatorController animatorController;*/
     private CasingMemoryPool casingMemoryPool;
     private ImpactMemoryPool impactMemoryPool;
     private PlayerMovement playerMovement;
@@ -60,11 +60,13 @@ public class WeaponAssultRifle : MonoBehaviour
 
     private void Awake()
     {
-        audioSource = GetComponent<AudioSource>();
-        animatorController = GetComponentInParent<AnimatorController>();
+        base.Setup();
+
+        /*audioSource = GetComponent<AudioSource>();
+        animatorController = GetComponentInParent<AnimatorController>();*/
         casingMemoryPool = GetComponent<CasingMemoryPool>();
         impactMemoryPool = GetComponent<ImpactMemoryPool>();
-        playerMovement = GetComponentInParent<PlayerMovement>();
+        //playerMovement = GetComponentInParent<PlayerMovement>();
         mainCamera = Camera.main;
 
         weaponStatus.currentAmmo = weaponStatus.maxAmmo;
@@ -85,7 +87,7 @@ public class WeaponAssultRifle : MonoBehaviour
         isReload = false;
     }
 
-    public void StartWeaponAction(int type = 0)
+    public override void StartWeaponAction(int type = 0)
     {
         if (isReload == true) return;
         if (isModChange == true) return;
@@ -109,7 +111,7 @@ public class WeaponAssultRifle : MonoBehaviour
         }
     }
 
-    public void StopWeaponAction(int type = 0)
+    public override void StopWeaponAction(int type = 0)
     {
         
         if (type == 0)
@@ -145,7 +147,7 @@ public class WeaponAssultRifle : MonoBehaviour
         isModChange = false;
     }
 
-    public void StartReload()
+    public override void StartReload()
     {
         if (isReload == true || weaponStatus.currentAmmo >= weaponStatus.maxAmmo || weaponStatus.maxCurrentAmmo <= 0) return;
         isModChange = false;
@@ -299,12 +301,12 @@ public class WeaponAssultRifle : MonoBehaviour
         muzzleFlash.SetActive(false);
     }
 
-    private void PlaySound(AudioClip clip)
+    /*private void PlaySound(AudioClip clip)
     {
         audioSource.Stop();
         audioSource.clip = clip;
         audioSource.Play();
-    }
+    }*/
 
     public void IncreaseAmmo(int ammoAmount)
     {
