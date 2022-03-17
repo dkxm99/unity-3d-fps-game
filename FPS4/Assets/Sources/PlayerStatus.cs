@@ -6,9 +6,6 @@ using UnityEngine;
 public class HPEvent : UnityEngine.Events.UnityEvent<int, int> { }
 public class PlayerStatus : MonoBehaviour
 {
-    [HideInInspector]
-    public HPEvent hpEvent = new HPEvent();
-
     [Header("Walk, Run Speed")]
     [SerializeField]
     private float walkSpeed;
@@ -19,6 +16,9 @@ public class PlayerStatus : MonoBehaviour
     [SerializeField]
     private int maxHP = 100;
     private int currentHP;
+    
+    [HideInInspector]
+    public HPEvent hpEvent = new HPEvent();
 
     public float WalkSpeed => walkSpeed;
     public float RunSpeed => runSpeed;

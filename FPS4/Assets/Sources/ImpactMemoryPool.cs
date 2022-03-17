@@ -18,6 +18,18 @@ public class ImpactMemoryPool : MonoBehaviour
         }
     }
 
+    public void SpawnImpactKnife(Collider other, Transform knifeTransform)
+    {
+        if (other.gameObject.CompareTag("Floor") || other.gameObject.CompareTag("ExplosiveObject"))
+        {
+            OnSpawnImpact(ImpactType.Normal, knifeTransform.position, Quaternion.Inverse(knifeTransform.rotation));
+        }
+        else if (other.transform.CompareTag("Enemy"))
+        {
+            OnSpawnImpact(ImpactType.Enemy, knifeTransform.position, Quaternion.Inverse(knifeTransform.rotation));
+        }
+    }
+
     public void SpawnImpact(RaycastHit hit)
     {
         if (hit.transform.CompareTag("Floor") || hit.transform.CompareTag("ExplosiveObject"))
@@ -35,6 +47,6 @@ public class ImpactMemoryPool : MonoBehaviour
         GameObject item = memoryPool[(int)type].ActivatePoolItem();
         item.transform.position = position;
         item.transform.rotation = rotation;
-        item.GetComponent<Impact>().SetUp(memoryPool[(int)type]);
+        item.GetComponent<Impact>().Setup(memoryPool[(int)type]);
     }
 }

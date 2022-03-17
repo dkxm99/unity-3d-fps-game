@@ -6,8 +6,6 @@ using TMPro;
 
 public class PlayerHUD : MonoBehaviour
 {
-    private WeaponSystem weapon;
-
     [Header("Components")]
     [SerializeField]
     private PlayerStatus status;
@@ -34,16 +32,19 @@ public class PlayerHUD : MonoBehaviour
     [SerializeField]
     private AnimationCurve curveBloodScreen;
 
+    private WeaponSystem weapon;
+
     private void Awake()
     {
         //SetupWeapon();
-        weapon.ammoEvent.AddListener(UpdateAmmoHUD);
         status.hpEvent.AddListener(UpdateHpHUD);
+        weapon.ammoEvent.AddListener(UpdateAmmoHUD);
+        
     }
 
     public void SetupAllWeapon(WeaponSystem[] weapons)
     {
-        for(int i = 0; i < weapons.Length; ++i)
+        for (int i = 0; i < weapons.Length; ++i)
         {
             weapons[i].ammoEvent.AddListener(UpdateAmmoHUD);
         }
@@ -65,7 +66,7 @@ public class PlayerHUD : MonoBehaviour
     private void UpdateAmmoHUD(int currentAmmo, int currentMaxAmmo)
     {
         textAmmo.text = $"<size=40>{currentAmmo}/</size=30>{currentMaxAmmo}";
-        if(currentAmmo < 10)
+        if (currentAmmo < 10)
         {
             textAmmo.text = $"<size=40> <color=#ff0000>{currentAmmo}<color=#000000ff>/</size=30>{currentMaxAmmo}";
         }
@@ -75,14 +76,14 @@ public class PlayerHUD : MonoBehaviour
     {
         textHP.text = "HP" + current;
 
-        if(previous <= current)
+        if (previous <= current)
         {
             /*StopCoroutine("OnHealScreen");
             StartCoroutine("OnHealScreen");*/
             return;
         }
 
-        if(previous - current > 0)
+        if (previous - current > 0)
         {
             StopCoroutine("OnBloodScreen");
             StartCoroutine("OnBloodScreen");
@@ -109,7 +110,7 @@ public class PlayerHUD : MonoBehaviour
     {
         float percent = 0;
 
-        while(percent < 1)
+        while (percent < 1)
         {
             percent += Time.deltaTime;
 

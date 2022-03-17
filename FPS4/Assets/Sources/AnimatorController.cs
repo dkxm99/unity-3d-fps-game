@@ -29,6 +29,12 @@ public class AnimatorController : MonoBehaviour
         get => animator.GetBool("isAim");
     }
 
+    public bool AttackType
+    {
+        set => animator.SetBool("attackType", value);
+        get => animator.GetBool("attackType");
+    }
+
     public float EnemyMovement
     {
         set => animator.SetFloat("MoveSpeed", value);

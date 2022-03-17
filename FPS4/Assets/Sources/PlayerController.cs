@@ -67,10 +67,10 @@ public class PlayerController : MonoBehaviour
         {
             bool isRun = false;
             if (v > 0) isRun = Input.GetKey(keyCodeRun);
-            if(isRun == true && weapon.AnimatorController.AimModeIs == true)
+            if (isRun == true && weapon.AnimatorController.AimModeIs == true)
             {
                 weapon.AnimatorController.AimModeIs = false;
-                weapon.mainCamera.fieldOfView = weapon.defaultFOV;       
+                weapon.mainCamera.fieldOfView = weapon.defaultFOV;
                 weapon.aimImage.enabled = !weapon.aimImage.enabled;
             }
 
@@ -121,13 +121,13 @@ public class PlayerController : MonoBehaviour
             /*rotateToMouse.rotCamXAxisSpeed = 2;
             rotateToMouse.rotCamYAxisSpeed = 1;*/
             weapon.StartWeaponAction(1);
-            
+
         }
         else if (Input.GetMouseButtonUp(1))
-        {  
+        {
             weapon.StopWeaponAction(1);
-           /* rotateToMouse.rotCamXAxisSpeed = 5;
-            rotateToMouse.rotCamYAxisSpeed = 3;*/
+            /* rotateToMouse.rotCamXAxisSpeed = 5;
+             rotateToMouse.rotCamYAxisSpeed = 3;*/
         }
         if (Input.GetKeyDown(KeyCodeReload))
         {
@@ -138,7 +138,7 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(int damage)
     {
         bool isDie = playerStatus.DecreaseHP(damage);
-        if(isDie == true)
+        if (isDie == true)
         {
             Debug.Log("GameOver");
         }
@@ -148,4 +148,4 @@ public class PlayerController : MonoBehaviour
     {
         weapon = newWeapon;
     }
-}
+} 

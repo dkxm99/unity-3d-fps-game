@@ -12,7 +12,7 @@ public class Impact : MonoBehaviour
         particle = GetComponent<ParticleSystem>();
     }
 
-    public void SetUp(MemoryPool pool)
+    public void Setup(MemoryPool pool)
     {
         memoryPool = pool;
     }

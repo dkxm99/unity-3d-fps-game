@@ -301,8 +301,12 @@ public class EnemyFSM : MonoBehaviour
     }
     public void TakeDamage(int damage)
     {
+        float distance = Vector3.Distance(target.transform.position, transform.position);
         isDie = status.DecreaseHP(damage);
-        ChangeState(EnemyState.Pursuit);
+        if (distance < pursuitMaxRange)
+        {
+            ChangeState(EnemyState.Pursuit);
+        }
         if(isDie == true)
         {
             //gameObject.SetActive(false);         

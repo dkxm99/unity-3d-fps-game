@@ -112,12 +112,12 @@ public class WeaponAssultRifle : WeaponSystem
 
     public override void StopWeaponAction(int type = 0)
     {
-        
+
         if (type == 0)
         {
             isAttack = false;
             StopCoroutine("OnAttackLoop");
-        }       
+        }
     }
 
     private IEnumerator AimModeChange()
@@ -131,15 +131,15 @@ public class WeaponAssultRifle : WeaponSystem
 
         float start = mainCamera.fieldOfView;
         float end = animatorController.AimModeIs == true ? aimFOV : defaultFOV;
-       
+
         isModChange = true;
-        
+
         while (percent < 1)
         {
             current += Time.deltaTime;
             percent = current / time;
 
-            mainCamera.fieldOfView = Mathf.Lerp(start, end, percent);           
+            mainCamera.fieldOfView = Mathf.Lerp(start, end, percent);
             yield return null;
         }
 
@@ -281,12 +281,12 @@ public class WeaponAssultRifle : WeaponSystem
         {
             impactMemoryPool.SpawnImpact(hit);
 
-            if(hit.transform.CompareTag("Enemy"))
+            if (hit.transform.CompareTag("Enemy"))
             {
                 hit.rigidbody.AddForceAtPosition(new Vector3(10f, 0, 0), hit.transform.position);
                 hit.transform.GetComponent<EnemyFSM>().TakeDamage(weaponStatus.damage);
             }
-            else if(hit.transform.CompareTag("ExplosiveObject"))
+            else if (hit.transform.CompareTag("ExplosiveObject"))
             {
                 hit.transform.GetComponent<ExplosiveObject>().TakeDamage(weaponStatus.damage);
             }
