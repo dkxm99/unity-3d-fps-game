@@ -28,19 +28,20 @@ public class WeaponKnife : WeaponSystem
         weaponStatus.currentAmmo = weaponStatus.maxAmmo;
     }
 
-    
 
-    public override void StartWeaponAction(int type = 0)
+    public override void StartWeaponAction(int type = 0) { }
+
+    public override void StartKnifeAction()
     {
         if (isAttack == true) return;
 
         if (weaponStatus.isAutomaticAttack == true)
         {
-            StartCoroutine("OnAttackLoop", type);
+            StartCoroutine("OnAttackLoop");
         }
         else
         {
-            StartCoroutine("OnAttack", type);
+            StartCoroutine("OnAttack");
         }
     }
 
@@ -52,19 +53,19 @@ public class WeaponKnife : WeaponSystem
 
     public override void StartReload() { }
 
-    private IEnumerator OnAttackLoop(int type)
+    private IEnumerator OnAttackLoop()
     {
         while (true)
         {
-            yield return StartCoroutine("OnAttack", type);
+            yield return StartCoroutine("OnAttack");
         }
     }
 
-    private IEnumerator OnAttack(int type)
+    private IEnumerator OnAttack()
     {
         isAttack = true;
 
-        animatorController.SetFloat("attackType", type);
+        animatorController.SetFloat("attackType", 0);
 
         animatorController.Play("Fire", -1, 0);
 

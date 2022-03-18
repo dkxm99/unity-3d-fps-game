@@ -56,6 +56,7 @@ public class WeaponPistol : WeaponSystem
         isReload = false;
     }
 
+    public override void StartKnifeAction() { }
     public override void StartWeaponAction(int type = 0)
     {
         if (isReload == true) return;

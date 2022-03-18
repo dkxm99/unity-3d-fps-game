@@ -43,6 +43,8 @@ public abstract class WeaponSystem : MonoBehaviour
     public abstract void StopWeaponAction(int type = 0);
     public abstract void StartReload();
 
+    public abstract void StartKnifeAction();
+
     protected void PlaySound(AudioClip clip)
     {
         audioSource.Stop();

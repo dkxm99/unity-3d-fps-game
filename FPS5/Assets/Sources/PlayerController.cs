@@ -23,7 +23,6 @@ public class PlayerController : MonoBehaviour
     private AudioSource audioSource;
     //private WeaponAssultRifle weapon;
     private WeaponSystem weapon;
-    private WeaponKnife knife;
 
     private void Awake()
     {
@@ -34,7 +33,6 @@ public class PlayerController : MonoBehaviour
         playerStatus = GetComponent<PlayerStatus>();
         //animatorController = GetComponent<AnimatorController>();
         audioSource = GetComponent<AudioSource>();
-        knife = GetComponentInChildren<WeaponKnife>();
         //weapon = GetComponentInChildren<WeaponAssultRifle>();
         //weaponSystem = GetComponentInChildren<WeaponSystem>();
     }
@@ -137,7 +135,7 @@ public class PlayerController : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.V))
         {
-            knife.
+            weapon.StartKnifeAction();
         }
     }
 
