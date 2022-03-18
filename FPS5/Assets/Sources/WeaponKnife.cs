@@ -31,17 +31,17 @@ public class WeaponKnife : WeaponSystem
 
     public override void StartWeaponAction(int type = 0) { }
 
-    public override void StartKnifeAction()
+    public override void StartKnifeAction(int type = 0)
     {
         if (isAttack == true) return;
 
         if (weaponStatus.isAutomaticAttack == true)
         {
-            StartCoroutine("OnAttackLoop");
+            StartCoroutine("OnAttackLoop", type);
         }
         else
         {
-            StartCoroutine("OnAttack");
+            StartCoroutine("OnAttack", type);
         }
     }
 
@@ -53,19 +53,19 @@ public class WeaponKnife : WeaponSystem
 
     public override void StartReload() { }
 
-    private IEnumerator OnAttackLoop()
+    private IEnumerator OnAttackLoop(int type)
     {
         while (true)
         {
-            yield return StartCoroutine("OnAttack");
+            yield return StartCoroutine("OnAttack", type);
         }
     }
 
-    private IEnumerator OnAttack()
+    private IEnumerator OnAttack(int type)
     {
         isAttack = true;
 
-        animatorController.SetFloat("attackType", 0);
+        animatorController.SetFloat("attackType", type);
 
         animatorController.Play("Fire", -1, 0);
 

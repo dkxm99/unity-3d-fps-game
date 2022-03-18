@@ -7,6 +7,7 @@ public struct WeaponStatus
 {
     public WeaponName weaponName;
     public int damage;
+    public int knifeDamage;
     public int firedAmmo;
     public int maxCurrentAmmo;
     public int currentAmmo;

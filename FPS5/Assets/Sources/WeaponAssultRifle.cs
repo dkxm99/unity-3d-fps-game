@@ -29,6 +29,9 @@ public class WeaponAssultRifle : WeaponSystem
     [SerializeField]
     private AudioClip audioClipAim;
 
+    [SerializeField]
+    private WeaponKnifeCollider weaponKnifeCollider;
+
     /*[Header("Weapon Setting")]
     [SerializeField]
     private WeaponStatus weaponStatus;*/
@@ -82,10 +85,38 @@ public class WeaponAssultRifle : WeaponSystem
     {
         isModChange = false;
         isAttack = false;
+        isKnifeAttack = false;
         isReload = false;
     }
 
-    public override void StartKnifeAction() { }
+    public override void StartKnifeAction(int type = 0)
+    {
+        if (isKnifeAttack == true) return;
+        StartCoroutine("OnKnifeAttack", type);
+    }
+
+    private IEnumerator OnKnifeAttack(int type)
+    {
+        isKnifeAttack = true;
+
+        animatorController.SetFloat("attackType", type);
+
+        animatorController.Play("Knife", -1, 0);
+
+        yield return new WaitForEndOfFrame();
+
+        while (true)
+        {
+            if (animatorController.CurrentAnimationIs("Movement"))
+            {
+                isKnifeAttack = false;
+
+                yield break;
+            }
+            yield return null;
+        }
+        //PlaySound(audioClipFire);
+    }
 
     public override void StartWeaponAction(int type = 0)
     {
@@ -312,5 +343,10 @@ public class WeaponAssultRifle : WeaponSystem
     {
         weaponStatus.maxCurrentAmmo += ammoAmount;
         ammoEvent.Invoke(weaponStatus.currentAmmo, weaponStatus.maxCurrentAmmo);
+    }
+
+    public void StartWeaponKnifeCollider()
+    {
+        weaponKnifeCollider.StartCollider(weaponStatus.knifeDamage);
     }
 }

@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     private KeyCode keyCodeRun = KeyCode.LeftShift;
     private KeyCode KeyCodeJump = KeyCode.Space;
     private KeyCode KeyCodeReload = KeyCode.R;
+    private KeyCode KeyCodeKnife = KeyCode.V;
 
     [Header("Audio Clips")]
     [SerializeField]
@@ -133,9 +134,9 @@ public class PlayerController : MonoBehaviour
         {
             weapon.StartReload();
         }
-        if(Input.GetKeyDown(KeyCode.V))
+        if(Input.GetKeyDown(KeyCodeKnife))
         {
-            weapon.StartKnifeAction();
+            weapon.StartKnifeAction(0);
         }
     }
 

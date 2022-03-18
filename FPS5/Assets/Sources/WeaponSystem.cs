@@ -33,6 +33,7 @@ public abstract class WeaponSystem : MonoBehaviour
     protected float lastAttackTime = 0;
     protected bool isReload = false;
     protected bool isAttack = false;
+    protected bool isKnifeAttack = false;
     protected AudioSource audioSource;
     protected AnimatorController animatorController;
 
@@ -42,8 +43,7 @@ public abstract class WeaponSystem : MonoBehaviour
     public abstract void StartWeaponAction(int type = 0);
     public abstract void StopWeaponAction(int type = 0);
     public abstract void StartReload();
-
-    public abstract void StartKnifeAction();
+    public abstract void StartKnifeAction(int type = 0);
 
     protected void PlaySound(AudioClip clip)
     {

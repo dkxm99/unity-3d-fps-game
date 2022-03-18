@@ -17,5 +17,5 @@ public class WeaponGrenade : WeaponSystem
 
     }
 
-    public override void StartKnifeAction() { }
+    public override void StartKnifeAction(int type = 0) { }
 }
