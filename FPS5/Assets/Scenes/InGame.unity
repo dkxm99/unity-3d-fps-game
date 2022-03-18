@@ -9199,6 +9199,65 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd9a03a16f506fc4f8425ffe0ece5663, type: 3}
+--- !u!1 &334390457
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 334390458}
+  - component: {fileID: 334390460}
+  - component: {fileID: 334390459}
+  m_Layer: 0
+  m_Name: KnifeCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &334390458
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 334390457}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.08, y: -0.5, z: 0.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2030341464}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &334390459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 334390457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fad2f67330e1764cae0f813466e57ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  impactMemoryPool: {fileID: 8537100672517677572}
+  knifeTransform: {fileID: 2030341464}
+--- !u!135 &334390460
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 334390457}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.35
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &339800286
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -48808,6 +48867,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4000013041734426, guid: d803e729730d97a4e89edf13b602b3f4, type: 3}
   m_PrefabInstance: {fileID: 1109752817}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &2030341464 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2497147142436669675, guid: 52418b8f09c8bd645b8e53680b9b7f60, type: 3}
+  m_PrefabInstance: {fileID: 8537100672517677566}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2030751580
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -56758,9 +56822,7 @@ MonoBehaviour:
   aimFOV: 30
   mainCamera: {fileID: 0}
   aimImage: {fileID: 1734881473}
-  audioClipTakeOutWeapon: {fileID: 0}
-  audioClipFire: {fileID: 0}
-  isModChange: 0
+  weaponKnifeCollider: {fileID: 334390459}
 --- !u!114 &8537100672517677571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56917,3 +56979,15 @@ MonoBehaviour:
   impactPrefab:
   - {fileID: 1765103717}
   - {fileID: 2357282756815759616, guid: 115715ccff1ba9f47b1196efb5bf100f, type: 3}
+--- !u!114 &8537100672517677580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8537100672517677569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f734b15a333fd34b8b5f4e03b98936f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

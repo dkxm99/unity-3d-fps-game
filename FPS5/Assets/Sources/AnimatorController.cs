@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AnimatorController : MonoBehaviour
@@ -54,5 +52,10 @@ public class AnimatorController : MonoBehaviour
     public bool CurrentAnimationIs(string name)
     {
         return animator.GetCurrentAnimatorStateInfo(0).IsName(name);
+    }
+
+    public void SetFloat(string paraName, float value)
+    {
+        animator.SetFloat(paraName, value);
     }
 }
