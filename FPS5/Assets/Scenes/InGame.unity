@@ -10316,6 +10316,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fee6e1da33beae9409089ab8a832464f, type: 3}
+--- !u!4 &373832732 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3102549839498774439, guid: 52418b8f09c8bd645b8e53680b9b7f60, type: 3}
+  m_PrefabInstance: {fileID: 8537100672517677566}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &379396614
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15575,7 +15580,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 613330041}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.08, y: -0.5, z: 0.1}
+  m_LocalPosition: {x: 0.408, y: -0.5, z: 0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 849011483}
@@ -15595,6 +15600,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   impactMemoryPool: {fileID: 795482554}
   knifeTransform: {fileID: 849011483}
+  weapons: 0
 --- !u!135 &613330044
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -15606,8 +15612,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.35
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.3
+  m_Center: {x: 0, y: 0, z: -0.1}
 --- !u!1001 &613594188
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29527,6 +29533,66 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4000010089197750, guid: 8632b7283e4ce284d8b8cd7c70d079f3, type: 3}
   m_PrefabInstance: {fileID: 1956941510}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1179345626
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1179345627}
+  - component: {fileID: 1179345629}
+  - component: {fileID: 1179345628}
+  m_Layer: 6
+  m_Name: KnifeCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1179345627
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1179345626}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.408, y: -0.6, z: 0.135}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 373832732}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1179345628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1179345626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fad2f67330e1764cae0f813466e57ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  impactMemoryPool: {fileID: 8537100672517677577}
+  knifeTransform: {fileID: 373832732}
+  weapons: 0
+--- !u!135 &1179345629
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1179345626}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.3
+  m_Center: {x: 0, y: 0, z: -0.1}
 --- !u!1001 &1179648456
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -56820,7 +56886,7 @@ MonoBehaviour:
   weaponStatus:
     weaponName: 1
     damage: 20
-    knifeDamage: 0
+    knifeDamage: 100
     firedAmmo: 0
     maxCurrentAmmo: 80
     currentAmmo: 21
@@ -56842,6 +56908,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b0d51244fd32fc647960320540b32f66, type: 3}
   audioClipAim: {fileID: 8300000, guid: acaebc89b98b82142bd2b24edb6081e4, type: 3}
   isModChange: 0
+  weaponKnifeCollider: {fileID: 1179345628}
 --- !u!114 &8537100672517677571
 MonoBehaviour:
   m_ObjectHideFlags: 0

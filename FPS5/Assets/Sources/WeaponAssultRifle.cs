@@ -97,6 +97,8 @@ public class WeaponAssultRifle : WeaponSystem
 
     private IEnumerator OnKnifeAttack(int type)
     {
+        weaponKnifeCollider.weapons = 0;
+
         isKnifeAttack = true;
 
         animatorController.SetFloat("attackType", type);
@@ -339,7 +341,7 @@ public class WeaponAssultRifle : WeaponSystem
         audioSource.Play();
     }*/
 
-    public void IncreaseAmmo(int ammoAmount)
+    public override void IncreaseAmmo(int ammoAmount)
     {
         weaponStatus.maxCurrentAmmo += ammoAmount;
         ammoEvent.Invoke(weaponStatus.currentAmmo, weaponStatus.maxCurrentAmmo);

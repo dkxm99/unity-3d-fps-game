@@ -5,7 +5,7 @@ using UnityEngine;
 public class AmmoSupplyObject : MonoBehaviour
 {
     [SerializeField]
-    private int ammoAmount = 30;
+    private int ammoAmount = 60;
     [SerializeField]
     private float moveDistance = 0.2f;
     [SerializeField]
@@ -13,12 +13,11 @@ public class AmmoSupplyObject : MonoBehaviour
     [SerializeField]
     private float rotateSpeed = 50;
 
-    private WeaponStatus weaponStatus;
-    private WeaponAssultRifle weaponAssultRifle;
+    private WeaponSystem weaponSystem;
 
     private void Awake()
     {
-        weaponAssultRifle = GetComponent<WeaponAssultRifle>();
+        weaponSystem = GetComponent<WeaponSystem>();
     }
 
     private IEnumerator Start()
@@ -39,7 +38,7 @@ public class AmmoSupplyObject : MonoBehaviour
 
     public void useAmmoSupply(GameObject entity)
     {
-        entity.GetComponent<WeaponAssultRifle>().IncreaseAmmo(ammoAmount);
+        entity.GetComponent<WeaponSystem>().IncreaseAmmo(ammoAmount);
         Destroy(gameObject);
     }
 
@@ -48,7 +47,7 @@ public class AmmoSupplyObject : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             Debug.Log("supplied");
-            weaponAssultRifle.IncreaseAmmo(ammoAmount);
+            weaponSystem.IncreaseAmmo(ammoAmount);
             Destroy(gameObject);
         }
     }

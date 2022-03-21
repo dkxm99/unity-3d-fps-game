@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum WeaponType{Main = 0, Sub, Melee, Throw }
+public enum WeaponType { Main = 0, Sub, Melee, Throw }
 
 [System.Serializable]
 public class AmmoEvent : UnityEngine.Events.UnityEvent<int, int> { }
@@ -44,6 +44,7 @@ public abstract class WeaponSystem : MonoBehaviour
     public abstract void StopWeaponAction(int type = 0);
     public abstract void StartReload();
     public abstract void StartKnifeAction(int type = 0);
+    public abstract void IncreaseAmmo(int ammoAmount);
 
     protected void PlaySound(AudioClip clip)
     {

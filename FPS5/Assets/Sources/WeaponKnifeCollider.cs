@@ -13,10 +13,17 @@ public class WeaponKnifeCollider : MonoBehaviour
     private new Collider collider;
     private int damage;
 
+    private AnimatorController animatorController;
+    private Animator animator;
+
+    public int weapons;
+
     private void Awake()
     {
         collider = GetComponent<Collider>();
         collider.enabled = false;
+        animatorController = GetComponentInParent<AnimatorController>();
+        animator = GetComponentInParent<Animator>();
     }
 
     public void StartCollider(int damage)
@@ -40,10 +47,28 @@ public class WeaponKnifeCollider : MonoBehaviour
 
         if (other.CompareTag("Enemy"))
         {
+            animatorController.SetFloat("attackType", 1);
+            if (weapons == 0)
+            {
+                animator.Play("Knife");
+            }
+            else if (weapons == 1)
+            {
+                animator.Play("PistolKnife");
+            }
             other.GetComponent<EnemyFSM>().TakeDamage(damage);
         }
         else if (other.CompareTag("ExplosiveObject"))
         {
+            animatorController.SetFloat("attackType", 1);
+            if (weapons == 0)
+            {
+                animator.Play("Knife");
+            }
+            else if (weapons == 1)
+            {
+                animator.Play("PistolKnife");
+            }
             other.GetComponent<ExplosiveObject>().TakeDamage(damage);
         }
     }

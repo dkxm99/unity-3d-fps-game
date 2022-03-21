@@ -28,6 +28,8 @@ public class WeaponKnife : WeaponSystem
         weaponStatus.currentAmmo = weaponStatus.maxAmmo;
     }
 
+    public override void IncreaseAmmo(int ammoAmount) { }
+
 
     public override void StartWeaponAction(int type = 0) { }
 

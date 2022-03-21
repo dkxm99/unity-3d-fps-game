@@ -30,6 +30,9 @@ public class WeaponPistol : WeaponSystem
     private ImpactMemoryPool impactMemoryPool;
     private PlayerMovement playerMovement;
 
+    [SerializeField]
+    private WeaponKnifeCollider weaponKnifeCollider;
+
     private void Awake()
     {
         base.Setup();
@@ -56,7 +59,36 @@ public class WeaponPistol : WeaponSystem
         isReload = false;
     }
 
-    public override void StartKnifeAction(int type = 0) { }
+    public override void StartKnifeAction(int type = 0)
+    {
+        if (isKnifeAttack == true) return;
+        StartCoroutine("OnKnifeAttack", type);
+    }
+
+    private IEnumerator OnKnifeAttack(int type)
+    {
+        weaponKnifeCollider.weapons = 1;
+        StartWeaponKnifeCollider();
+        isKnifeAttack = true;
+
+        animatorController.SetFloat("attackType", type);
+
+        animatorController.Play("PistolKnife", -1, 0);
+
+        yield return new WaitForEndOfFrame();
+
+        while (true)
+        {
+            if (animatorController.CurrentAnimationIs("Movement"))
+            {
+                isKnifeAttack = false;
+
+                yield break;
+            }
+            yield return null;
+        }
+        //PlaySound(audioClipFire);
+    }
     public override void StartWeaponAction(int type = 0)
     {
         if (isReload == true) return;
@@ -146,7 +178,7 @@ public class WeaponPistol : WeaponSystem
         isReload = true;
         ReloadMode(weaponStatus.currentAmmo);
 
-        if (weaponStatus.currentAmmo == 30 && weaponStatus.firedAmmo == 0)
+        if (weaponStatus.currentAmmo == 20 && weaponStatus.firedAmmo == 0)
         {
             weaponStatus.firedAmmo = 1;
         }
@@ -174,7 +206,7 @@ public class WeaponPistol : WeaponSystem
                 if (weaponStatus.maxCurrentAmmo < 0) weaponStatus.maxCurrentAmmo = 0;
                 ammoEvent.Invoke(weaponStatus.currentAmmo, weaponStatus.maxCurrentAmmo);
                 weaponStatus.firedAmmo = 0;
-                weaponStatus.maxAmmo = 31;
+                weaponStatus.maxAmmo = 21;
                 yield break;
             }
             yield return null;
@@ -263,9 +295,14 @@ public class WeaponPistol : WeaponSystem
         muzzleFlash.SetActive(false);
     }
 
-    public void IncreaseAmmo(int ammoAmount)
+    public override void IncreaseAmmo(int ammoAmount)
     {
         weaponStatus.maxCurrentAmmo += ammoAmount;
         ammoEvent.Invoke(weaponStatus.currentAmmo, weaponStatus.maxCurrentAmmo);
+    }
+
+    public void StartWeaponKnifeCollider()
+    {
+        weaponKnifeCollider.StartCollider(weaponStatus.knifeDamage);
     }
 }
