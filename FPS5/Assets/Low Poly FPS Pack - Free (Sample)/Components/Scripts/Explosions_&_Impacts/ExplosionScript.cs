@@ -16,8 +16,13 @@ public class ExplosionScript : MonoBehaviour {
 	public AudioClip[] explosionSounds;
 	public AudioSource audioSource;
 
+	[Header("Exploded Barrel")]
+	[SerializeField]
+	private GameObject explodedBarrelPrefab;
+
 	private void Start () {
 		//Start the coroutines
+		StartCoroutine(ExplodedBarrel());
 		StartCoroutine (DestroyTimer ());
 		StartCoroutine (LightFlash ());
 
@@ -41,6 +46,11 @@ public class ExplosionScript : MonoBehaviour {
 		//Destroy the explosion prefab after set amount of seconds
 		yield return new WaitForSeconds (despawnTime);
 		Destroy (gameObject);
+	}
+	private IEnumerator ExplodedBarrel()
+	{
+		Instantiate(explodedBarrelPrefab, transform.position, gameObject.transform.rotation);
+		yield return null;
 	}
 }
 // ----- Low Poly FPS Pack Free Version -----

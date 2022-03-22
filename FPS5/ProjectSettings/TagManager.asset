@@ -12,6 +12,11 @@ TagManager:
   - ExplosiveObject
   - HealingGel
   - AmmoSupply
+  - GasTank
+  - Concrete
+  - Metal
+  - ExplosiveBarrel
+  - ExplodedBarrel
   layers:
   - Default
   - TransparentFX

@@ -36,7 +36,6 @@ public class RotateToMouse : MonoBehaviour
         if (angle < -360) angle += 360;
         if (angle > 360) angle -= 360;
 
-        Debug.Log(angle);
         if((angle >= 75 && angle <= 85) || (angle >= -85 && angle <= -75))
         {
             playerStatus.walkSpeed = 15;

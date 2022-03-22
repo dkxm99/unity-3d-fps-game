@@ -102,10 +102,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 100
-  explosionEffectPrefab: {fileID: 2923470200424351769, guid: 8f49efb07c1be9c41ae6150d9130b96a, type: 3}
+  explosionEffectPrefab: {fileID: 6895874829463645419, guid: d320cd260360ad945b23aee5509e8567, type: 3}
   explosionDelayTime: 0.3
   explosionRadius: 7.5
   explosionForce: 1000
+  explodedBarrelPrefab: {fileID: 5191376227836740699, guid: a8c8969e8983b6b488dd86e81e653bee, type: 3}
 --- !u!1 &6176389689135606380
 GameObject:
   m_ObjectHideFlags: 0

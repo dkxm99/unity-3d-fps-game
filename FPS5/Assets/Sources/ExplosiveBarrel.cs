@@ -14,6 +14,10 @@ public class ExplosiveBarrel : ExplosiveObject
     [SerializeField]
     private float explosionForce = 1000.0f;
 
+    [Header("Exploded Barrel")]
+    [SerializeField]
+    private GameObject explodedBarrelPrefab;
+
     private bool isExplode = false;
 
     public override void TakeDamage(int damage)

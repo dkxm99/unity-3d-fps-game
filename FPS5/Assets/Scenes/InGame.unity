@@ -56811,6 +56811,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8537100674264111044, guid: 52418b8f09c8bd645b8e53680b9b7f60, type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: 182b7f11db452bc458d35a6c9eced06f, type: 3}
+    - target: {fileID: 8537100674264111044, guid: 52418b8f09c8bd645b8e53680b9b7f60, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 5d19848ec5febe84ab9157a2c3ba9845, type: 2}
     - target: {fileID: 8537100674273633288, guid: 52418b8f09c8bd645b8e53680b9b7f60, type: 3}
       propertyPath: m_Name
       value: AssultRifle
