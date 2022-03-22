@@ -134,7 +134,7 @@ public class PlayerController : MonoBehaviour
         {
             weapon.StartReload();
         }
-        if(Input.GetKeyDown(KeyCodeKnife))
+        if (Input.GetKeyDown(KeyCodeKnife))
         {
             weapon.StartKnifeAction(0);
         }
@@ -153,4 +153,4 @@ public class PlayerController : MonoBehaviour
     {
         weapon = newWeapon;
     }
-} 
+}

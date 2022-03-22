@@ -20,9 +20,9 @@ public class WeaponSwitchingSystem : MonoBehaviour
     {
         playerHUD.SetupAllWeapon(weapons);
 
-        for(int i = 0; i < weapons.Length; ++i)
+        for (int i = 0; i < weapons.Length; ++i)
         {
-            if(weapons[i].gameObject != null)
+            if (weapons[i].gameObject != null)
             {
                 weapons[i].gameObject.SetActive(false);
             }
@@ -41,7 +41,7 @@ public class WeaponSwitchingSystem : MonoBehaviour
         if (!Input.anyKeyDown) return;
 
         int inputIndex = 0;
-        if(int.TryParse(Input.inputString, out inputIndex) && (inputIndex > 0)&&inputIndex < 4)
+        if (int.TryParse(Input.inputString, out inputIndex) && (inputIndex > 0) && inputIndex < 4)
         {
             SwitchingWeapon((WeaponType)(inputIndex - 1));
         }
@@ -49,19 +49,19 @@ public class WeaponSwitchingSystem : MonoBehaviour
 
     private void SwitchingWeapon(WeaponType weaponType)
     {
-        if(weapons[(int)weaponType] == null)
+        if (weapons[(int)weaponType] == null)
         {
             return;
         }
 
-        if(currentWeapon != null)
+        if (currentWeapon != null)
         {
             previousWeapon = currentWeapon;
         }
 
         currentWeapon = weapons[(int)weaponType];
 
-        if(currentWeapon == previousWeapon)
+        if (currentWeapon == previousWeapon)
         {
             return;
         }
@@ -69,7 +69,7 @@ public class WeaponSwitchingSystem : MonoBehaviour
         playerController.SwitchingWeapon(currentWeapon);
         playerHUD.SwitchingWeapon(currentWeapon);
 
-        if(previousWeapon != null)
+        if (previousWeapon != null)
         {
             previousWeapon.gameObject.SetActive(false);
         }

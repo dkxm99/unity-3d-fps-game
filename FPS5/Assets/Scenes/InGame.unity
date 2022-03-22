@@ -56747,6 +56747,10 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8537100673921715528, guid: 52418b8f09c8bd645b8e53680b9b7f60, type: 3}
+      propertyPath: walkSpeed
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8537100673921715530, guid: 52418b8f09c8bd645b8e53680b9b7f60, type: 3}
       propertyPath: m_Enabled
       value: 1

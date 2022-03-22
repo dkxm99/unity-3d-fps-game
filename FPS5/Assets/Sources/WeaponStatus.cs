@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public enum WeaponName { AssaultRifle = 0, Pistol, Knife, Grenade}
+public enum WeaponName { AssaultRifle = 0, Pistol, Knife, Grenade }
 [System.Serializable]
 public struct WeaponStatus
 {
