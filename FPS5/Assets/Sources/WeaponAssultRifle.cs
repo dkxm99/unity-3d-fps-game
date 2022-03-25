@@ -50,6 +50,12 @@ public class WeaponAssultRifle : WeaponSystem
     private CasingMemoryPool casingMemoryPool;
     private ImpactMemoryPool impactMemoryPool;
     private PlayerMovement playerMovement;
+    private ThrowGrenade throwGrenade;
+    private RotateToMouse rotateToMouse;
+    private PlayerController playerController;
+
+    public int cnt = 0;
+
 
     /*[HideInInspector]
     public float defaultFOV = 60;
@@ -68,8 +74,10 @@ public class WeaponAssultRifle : WeaponSystem
         casingMemoryPool = GetComponent<CasingMemoryPool>();
         impactMemoryPool = GetComponent<ImpactMemoryPool>();
         playerMovement = GetComponentInParent<PlayerMovement>();
+        throwGrenade = GetComponentInChildren<ThrowGrenade>();
+        rotateToMouse = GetComponentInParent<RotateToMouse>();
+        playerController = GetComponentInParent<PlayerController>();
         mainCamera = Camera.main;
-
         weaponStatus.currentAmmo = weaponStatus.maxAmmo;
     }
 
@@ -78,6 +86,7 @@ public class WeaponAssultRifle : WeaponSystem
         PlaySound(audioClipTakeOutWeapon);
         muzzleFlash.SetActive(false);
         ammoEvent.Invoke(weaponStatus.currentAmmo, weaponStatus.maxCurrentAmmo);
+        grenadeAmmoEvent.Invoke(playerController.grenadeAmmo);
         ResetVariables();
     }
 
@@ -87,6 +96,35 @@ public class WeaponAssultRifle : WeaponSystem
         isAttack = false;
         isKnifeAttack = false;
         isReload = false;
+    }
+
+    public override void StartGrenadeAction(int type = 0) 
+    {
+        if (isGrenadeThrow == true) return;
+        if (playerController.grenadeAmmo <= 0) return;
+        StartCoroutine("OnGrenadeThrow", type);
+    }
+
+    private IEnumerator OnGrenadeThrow(int type)
+    {
+        isGrenadeThrow = true;
+        playerController.grenadeAmmo--;
+        grenadeAmmoEvent.Invoke(playerController.grenadeAmmo);
+        animatorController.Play("Throw", -1, 0);
+        throwGrenade.SetUp();
+        yield return new WaitForEndOfFrame();
+
+        while (true)
+        {
+            if (animatorController.CurrentAnimationIs("Movement"))
+            {
+                isGrenadeThrow = false;
+
+                yield break;
+            }
+            yield return null;
+        }
+        //PlaySound(audioClipFire);
     }
 
     public override void StartKnifeAction(int type = 0)
@@ -146,9 +184,9 @@ public class WeaponAssultRifle : WeaponSystem
 
     public override void StopWeaponAction(int type = 0)
     {
-
         if (type == 0)
         {
+            cnt = 0;
             isAttack = false;
             StopCoroutine("OnAttackLoop");
         }
@@ -192,9 +230,10 @@ public class WeaponAssultRifle : WeaponSystem
             aimImage.enabled = !aimImage.enabled;
         }
         StartCoroutine("OnReload");
+        StartCoroutine("ReloadMode",weaponStatus.currentAmmo);
     }
 
-    private void ReloadMode(int ammo)
+    private IEnumerator ReloadMode(int ammo)
     {
         if (ammo <= 0)
         {
@@ -210,13 +249,12 @@ public class WeaponAssultRifle : WeaponSystem
             animatorController.Play("Reload", -1, 0);
             PlaySound(audioClipReload[1]);
         }
+        yield return null;
     }
 
     private IEnumerator OnReload()
     {
         isReload = true;
-        ReloadMode(weaponStatus.currentAmmo);
-
         if (weaponStatus.currentAmmo == 30 && weaponStatus.firedAmmo == 0)
         {
             weaponStatus.firedAmmo = 1;
@@ -287,6 +325,22 @@ public class WeaponAssultRifle : WeaponSystem
             StartCoroutine("OnMuzzleFlash");
             PlaySound(audioClipFire);
 
+            cnt++;
+            if (cnt < 8)
+            {
+                rotateToMouse.eulerAngleX -= Random.Range(1.0f, 1.5f);
+            }
+            if (cnt >= 8 && cnt < 16)
+            {
+                rotateToMouse.eulerAngleX -= Random.Range(0.3f, 0.8f);
+                rotateToMouse.eulerAngleY += 1f;               
+            }           
+            else if(cnt >= 16)
+            {
+                rotateToMouse.eulerAngleX -= Random.Range(0.3f, 0.8f);
+                rotateToMouse.eulerAngleY -= 0.5f;
+            }
+
             casingMemoryPool.SpawnCasing(casingSpawnPoint.position, transform.right);
 
             TwoStepRayCast();
@@ -344,7 +398,9 @@ public class WeaponAssultRifle : WeaponSystem
     public override void IncreaseAmmo(int ammoAmount)
     {
         weaponStatus.maxCurrentAmmo += ammoAmount;
+        playerController.grenadeAmmo += 2;
         ammoEvent.Invoke(weaponStatus.currentAmmo, weaponStatus.maxCurrentAmmo);
+        grenadeAmmoEvent.Invoke(playerController.grenadeAmmo);
     }
 
     public void StartWeaponKnifeCollider()

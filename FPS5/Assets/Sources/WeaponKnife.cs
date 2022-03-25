@@ -55,6 +55,8 @@ public class WeaponKnife : WeaponSystem
 
     public override void StartReload() { }
 
+    public override void StartGrenadeAction(int type = 0) { }
+
     private IEnumerator OnAttackLoop(int type)
     {
         while (true)

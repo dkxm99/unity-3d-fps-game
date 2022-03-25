@@ -73,7 +73,7 @@ public class EnemyMemoryPool : MonoBehaviour
         GameObject item = enemyMemoryPool.ActivatePoolItem();
         item.transform.position = point.transform.position;
         //item.GetComponent<EnemyFSM>().Setup(target);
-        item.GetComponent<EnemyFSM>().Setup(target, this);
+        //item.GetComponent<EnemyFSM>().Setup(target, this); 이거
         //item.GetComponent<EnemyFSM>().Awake();
 
         spawnPointMemoryPool.DeactivatePoolItem(point);
@@ -82,6 +82,8 @@ public class EnemyMemoryPool : MonoBehaviour
     public void DeactivateEnemy(GameObject enemy)
     {
         spawnPointMemoryPool.DeactivatePoolItem(enemy);
-        Destroy(enemy, 3);
+        //적을 일정 수 죽일때마다 힐팩 or 탄약팩 드랍
+        //적을 죽일때마다 포인트를 얻고 포인트를 이용해서 스킬해금 및 강화
+        Destroy(enemy, 5.0f);
     }
 }

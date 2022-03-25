@@ -29,6 +29,10 @@ public class WeaponPistol : WeaponSystem
     private CasingMemoryPool casingMemoryPool;
     private ImpactMemoryPool impactMemoryPool;
     private PlayerMovement playerMovement;
+    private ThrowGrenade throwGrenade;
+    private RotateToMouse rotateToMouse;
+    private WeaponAssultRifle weaponAssultRifle;
+    private PlayerController playerController;
 
     [SerializeField]
     private WeaponKnifeCollider weaponKnifeCollider;
@@ -39,8 +43,10 @@ public class WeaponPistol : WeaponSystem
         casingMemoryPool = GetComponent<CasingMemoryPool>();
         impactMemoryPool = GetComponent<ImpactMemoryPool>();
         playerMovement = GetComponentInParent<PlayerMovement>();
+        throwGrenade = GetComponentInChildren<ThrowGrenade>();
+        rotateToMouse = GetComponentInParent<RotateToMouse>();
+        playerController = GetComponentInParent<PlayerController>();
         mainCamera = Camera.main;
-
         weaponStatus.currentAmmo = weaponStatus.maxAmmo;
     }
 
@@ -57,6 +63,35 @@ public class WeaponPistol : WeaponSystem
         isModChange = false;
         isAttack = false;
         isReload = false;
+    }
+
+    public override void StartGrenadeAction(int type = 0)
+    {
+        if (isGrenadeThrow == true) return;
+        if (playerController.grenadeAmmo <= 0) return;
+        StartCoroutine("OnGrenadeThrow", type);
+    }
+
+    private IEnumerator OnGrenadeThrow(int type)
+    {
+        isGrenadeThrow = true;
+        playerController.grenadeAmmo--;
+        grenadeAmmoEvent.Invoke(playerController.grenadeAmmo);
+        animatorController.Play("PistolGrenadeThrow", -1, 0);
+        throwGrenade.SetUp();
+        yield return new WaitForEndOfFrame();
+
+        while (true)
+        {
+            if (animatorController.CurrentAnimationIs("Movement"))
+            {
+                isGrenadeThrow = false;
+
+                yield break;
+            }
+            yield return null;
+        }
+        //PlaySound(audioClipFire);
     }
 
     public override void StartKnifeAction(int type = 0)
@@ -153,9 +188,10 @@ public class WeaponPistol : WeaponSystem
             aimImage.enabled = !aimImage.enabled;
         }
         StartCoroutine("OnReload");
+        StartCoroutine("ReloadMode", weaponStatus.currentAmmo);
     }
 
-    private void ReloadMode(int ammo)
+    private IEnumerator ReloadMode(int ammo)
     {
         if (ammo <= 0)
         {
@@ -171,6 +207,7 @@ public class WeaponPistol : WeaponSystem
             animatorController.Play("Reload", -1, 0);
             PlaySound(audioClipReload[1]);
         }
+        yield return null;
     }
 
     private IEnumerator OnReload()
@@ -248,6 +285,9 @@ public class WeaponPistol : WeaponSystem
             StartCoroutine("OnMuzzleFlash");
             PlaySound(audioClipFire);
 
+            rotateToMouse.eulerAngleX -= 1.0f;
+            rotateToMouse.eulerAngleY += 0.2f;
+
             casingMemoryPool.SpawnCasing(casingSpawnPoint.position, transform.right);
 
             TwoStepRayCast();
@@ -298,7 +338,9 @@ public class WeaponPistol : WeaponSystem
     public override void IncreaseAmmo(int ammoAmount)
     {
         weaponStatus.maxCurrentAmmo += ammoAmount;
+        playerController.grenadeAmmo += 1;
         ammoEvent.Invoke(weaponStatus.currentAmmo, weaponStatus.maxCurrentAmmo);
+        grenadeAmmoEvent.Invoke(playerController.grenadeAmmo);
     }
 
     public void StartWeaponKnifeCollider()

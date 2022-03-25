@@ -31,46 +31,60 @@ public class EnemyFSM : MonoBehaviour
     [SerializeField]
     private float attackRate = 0.5f;
 
+    [SerializeField]
+    private Collider collider;
+
     private EnemyState enemyState = EnemyState.None;
     private float lastAttackTime = 0;
     private float fieldOfView = 120f;
-    public SphereCollider col;
+    public Transform col;
     public Vector3 targetPos;
 
     private PlayerStatus status;
     private NavMeshAgent navMeshAgent;
     private Animator animator;
     private ImpactMemoryPool impactMemoryPool;
-    private EnemyMemoryPool enemyMemoryPool;
-    private GameObject target;
+    //private EnemyMemoryPool enemyMemoryPool;
+    //private GameObject target;
     private Rigidbody rigid;
     public bool isDie = false;
 
-    /* public void Awake()
+    [Header("Target")]
+    [SerializeField]
+    private GameObject target;
+
+     public void Awake()
      {
          muzzleFlash.SetActive(false);
-         status = GetComponent<PlayerStatus>();
-         navMeshAgent = GetComponent<NavMeshAgent>();
-         animator = GetComponent<Animator>();
-         impactMemoryPool = GetComponent<ImpactMemoryPool>();
-         col = GetComponent<SphereCollider>();
-         navMeshAgent.updateRotation = false;
-     }*/
+        status = GetComponent<PlayerStatus>();
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
+        impactMemoryPool = GetComponent<ImpactMemoryPool>();
+        col = GetComponentInChildren<Transform>();
+        rigid = GetComponent<Rigidbody>();
+        navMeshAgent.updateRotation = false;
+        rigid.isKinematic = true;
 
-    public void Setup(GameObject target, EnemyMemoryPool enemyMemoryPool)
+        //this.target = target;
+        //this.enemyMemoryPool = enemyMemoryPool;
+     }
+
+    /*public void Setup(GameObject target, EnemyMemoryPool enemyMemoryPool)
     {
         muzzleFlash.SetActive(false);
         status = GetComponent<PlayerStatus>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         impactMemoryPool = GetComponent<ImpactMemoryPool>();
-        col = GetComponent<SphereCollider>();
+        col = GetComponentInChildren<Transform>();
         rigid = GetComponent<Rigidbody>();
         navMeshAgent.updateRotation = false;
         rigid.isKinematic = true;
+        collider = new Collider();
         this.target = target;
         this.enemyMemoryPool = enemyMemoryPool;
-    }
+    }*/
+
     private void OnEnable()
     {
         ChangeState(EnemyState.Idle);
@@ -257,6 +271,10 @@ public class EnemyFSM : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
+        if(isDie == true)
+        {
+            return;
+        }
         float distance = Vector3.Distance(target.transform.position, transform.position);
 
         if (distance >= targetRecognizeRange)
@@ -272,7 +290,7 @@ public class EnemyFSM : MonoBehaviour
             if (angle < fieldOfView * 0.5f)
             {
                 RaycastHit hit;
-                if (Physics.Raycast(transform.position, direction, out hit, col.radius))
+                if (Physics.Raycast(transform.position, direction, out hit, 30.0f))
                 {
                     if (hit.collider.gameObject == target)
                     {
@@ -292,9 +310,9 @@ public class EnemyFSM : MonoBehaviour
 
     private void ChangeRagdoll()
     {
-        animator.enabled = false;
-        col.enabled = false;
+        animator.enabled = false;       
         StopAllCoroutines();
+        collider.enabled = false;
         navMeshAgent.enabled = false;
         muzzleFlash.SetActive(false);
         rigid.isKinematic = false;
@@ -309,10 +327,17 @@ public class EnemyFSM : MonoBehaviour
         }
         if(isDie == true)
         {
-            //gameObject.SetActive(false);         
-            ChangeRagdoll();          
-            enemyMemoryPool.DeactivateEnemy(gameObject);
+            //gameObject.SetActive(false);
+            ChangeRagdoll();
+            //enemyMemoryPool.DeactivateEnemy(gameObject);
+            StartCoroutine("Deactive");
         }
+    }
+
+    private IEnumerator Deactive()
+    {
+        yield return new WaitForSeconds(5);
+        Destroy(gameObject);
     }
 
     /*private void OnDrawGizmos()

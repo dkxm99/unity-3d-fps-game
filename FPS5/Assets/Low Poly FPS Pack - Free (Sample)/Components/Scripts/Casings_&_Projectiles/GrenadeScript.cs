@@ -22,34 +22,16 @@ public class GrenadeScript : MonoBehaviour {
 	public float power = 350.0F;
 
 	[Header("Throw Force")]
-	[Tooltip("Minimum throw force")]
-	public float minimumForce = 1500.0f;
-	[Tooltip("Maximum throw force")]
-	public float maximumForce = 2500.0f;
-	private float throwForce;
+	[SerializeField]
+	private float throwForce = 800.0f;
 
 	[Header("Audio")]
 	public AudioSource impactSound;
 
-	private void Awake () 
-	{
-		//Generate random throw force
-		//based on min and max values
-		throwForce = Random.Range
-			(minimumForce, maximumForce);
-
-		//Random rotation of the grenade
-		GetComponent<Rigidbody>().AddRelativeTorque 
-		   (Random.Range(500, 1500), //X Axis
-			Random.Range(0,0), 		 //Y Axis
-			Random.Range(0,0)  		 //Z Axis
-			* Time.deltaTime * 5000);
-	}
-
 	private void Start () 
 	{
 		//Launch the projectile forward by adding force to it at start
-		GetComponent<Rigidbody>().AddForce(gameObject.transform.forward * throwForce);
+		GetComponent<Rigidbody>().AddForce((Camera.main.transform.forward + new Vector3(0, 0.2f, 0)) * throwForce);
 
 		//Start the explosion timer
 		StartCoroutine (ExplosionTimer ());
@@ -85,22 +67,32 @@ public class GrenadeScript : MonoBehaviour {
 			//Add force to nearby rigidbodies
 			if (rb != null)
 				rb.AddExplosionForce (power * 5, explosionPos, radius, 3.0F);
-			
+
 			//If the explosion hits "Target" tag and isHit is false
-			if (hit.GetComponent<Collider>().tag == "Target" 
+			/*if (hit.GetComponent<Collider>().tag == "Target" 
 			    	&& hit.gameObject.GetComponent<TargetScript>().isHit == false) 
 			{
 				//Animate the target 
 				hit.gameObject.GetComponent<Animation> ().Play("target_down");
 				//Toggle "isHit" on target object
 				hit.gameObject.GetComponent<TargetScript>().isHit = true;
+			}*/
+
+			if (hit.GetComponent<Collider>().tag == "Player")
+			{
+				hit.transform.GetComponent<PlayerController>().TakeDamage(30);
+			}
+
+			if (hit.GetComponent<Collider>().tag == "Enemy")
+            {
+				hit.transform.GetComponent<EnemyFSM>().TakeDamage(100);
 			}
 
 			//If the explosion hits "ExplosiveBarrel" tag
-			if (hit.GetComponent<Collider>().tag == "ExplosiveBarrel") 
+			if (hit.GetComponent<Collider>().tag == "ExplosiveObject") 
 			{
 				//Toggle "explode" on explosive barrel object
-				hit.gameObject.GetComponent<ExplosiveBarrelScript> ().explode = true;
+				hit.transform.GetComponent<ExplosiveObject>().TakeDamage(100);
 			}
 		}
 

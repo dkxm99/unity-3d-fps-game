@@ -23,6 +23,9 @@ public class PlayerHUD : MonoBehaviour
     [Header("Ammo")]
     [SerializeField]
     private TextMeshProUGUI textAmmo;
+    [Header("GrenadeAmmo")]
+    [SerializeField]
+    private TextMeshProUGUI textGrenadeAmmo;
 
     [Header("HP & BloodScreen UI")]
     [SerializeField]
@@ -39,7 +42,7 @@ public class PlayerHUD : MonoBehaviour
         //SetupWeapon();
         status.hpEvent.AddListener(UpdateHpHUD);
         weapon.ammoEvent.AddListener(UpdateAmmoHUD);
-        
+        weapon.grenadeAmmoEvent.AddListener(UpdateGrenadeAmmoHUD);
     }
 
     public void SetupAllWeapon(WeaponSystem[] weapons)
@@ -47,6 +50,7 @@ public class PlayerHUD : MonoBehaviour
         for (int i = 0; i < weapons.Length; ++i)
         {
             weapons[i].ammoEvent.AddListener(UpdateAmmoHUD);
+            weapons[i].grenadeAmmoEvent.AddListener(UpdateGrenadeAmmoHUD);
         }
     }
 
@@ -70,6 +74,11 @@ public class PlayerHUD : MonoBehaviour
         {
             textAmmo.text = $"<size=40> <color=#ff0000>{currentAmmo}<color=#000000ff>/</size=30>{currentMaxAmmo}";
         }
+    }
+
+    private void UpdateGrenadeAmmoHUD(int grenadeAmmo)
+    {
+        textGrenadeAmmo.text = $"<size=30>{grenadeAmmo}";
     }
 
     private void UpdateHpHUD(int previous, int current)

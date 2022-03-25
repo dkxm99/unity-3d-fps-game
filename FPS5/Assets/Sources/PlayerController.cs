@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     private KeyCode KeyCodeJump = KeyCode.Space;
     private KeyCode KeyCodeReload = KeyCode.R;
     private KeyCode KeyCodeKnife = KeyCode.V;
+    private KeyCode KeyCodeGrenade = KeyCode.G;
 
     [Header("Audio Clips")]
     [SerializeField]
@@ -24,6 +25,9 @@ public class PlayerController : MonoBehaviour
     private AudioSource audioSource;
     //private WeaponAssultRifle weapon;
     private WeaponSystem weapon;
+    public GameObject gameOverMenu;
+
+    public int grenadeAmmo = 3;
 
     private void Awake()
     {
@@ -49,7 +53,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void UpdateRotate()
+    public void UpdateRotate()
     {
 
         float mouseX = Input.GetAxis("Mouse X");
@@ -138,6 +142,10 @@ public class PlayerController : MonoBehaviour
         {
             weapon.StartKnifeAction(0);
         }
+        if (Input.GetKeyDown(KeyCodeGrenade))
+        {
+            weapon.StartGrenadeAction(0);
+        }
     }
 
     public void TakeDamage(int damage)
@@ -146,7 +154,21 @@ public class PlayerController : MonoBehaviour
         if (isDie == true)
         {
             Debug.Log("GameOver");
+            StartCoroutine("GameOver");
         }
+    }
+
+    private IEnumerator GameOver()
+    {
+        for (int i = 1; i < 5; ++i)
+        {
+            transform.GetChild(i).gameObject.SetActive(false);
+        }
+        yield return new WaitForSeconds(1);
+        gameOverMenu.SetActive(true);      
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        Time.timeScale = 0;
     }
 
     public void SwitchingWeapon(WeaponSystem newWeapon)
