@@ -6,11 +6,12 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Input KeyCode")]
     [SerializeField]
-    private KeyCode keyCodeRun = KeyCode.LeftShift;
+    private KeyCode KeyCodeRun = KeyCode.LeftShift;
     private KeyCode KeyCodeJump = KeyCode.Space;
     private KeyCode KeyCodeReload = KeyCode.R;
     private KeyCode KeyCodeKnife = KeyCode.V;
     private KeyCode KeyCodeGrenade = KeyCode.G;
+    private KeyCode KeyCodeCrouch = KeyCode.LeftControl;
 
     [Header("Audio Clips")]
     [SerializeField]
@@ -71,12 +72,12 @@ public class PlayerController : MonoBehaviour
         if (h != 0 || v != 0)
         {
             bool isRun = false;
-            if (v > 0) isRun = Input.GetKey(keyCodeRun);
+            if (v > 0 && playerMovement.MoveSpeed > 1.5f) isRun = Input.GetKey(KeyCodeRun);
             if (isRun == true && weapon.AnimatorController.AimModeIs == true)
             {
                 weapon.AnimatorController.AimModeIs = false;
                 weapon.mainCamera.fieldOfView = weapon.defaultFOV;
-                weapon.aimImage.enabled = !weapon.aimImage.enabled;
+                weapon.crossHairImage.enabled = !weapon.crossHairImage.enabled;
             }
 
             playerMovement.MoveSpeed = isRun == true ? playerStatus.RunSpeed : playerStatus.WalkSpeed;
@@ -123,16 +124,11 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(1))
         {
-            /*rotateToMouse.rotCamXAxisSpeed = 2;
-            rotateToMouse.rotCamYAxisSpeed = 1;*/
             weapon.StartWeaponAction(1);
-
         }
         else if (Input.GetMouseButtonUp(1))
         {
             weapon.StopWeaponAction(1);
-            /* rotateToMouse.rotCamXAxisSpeed = 5;
-             rotateToMouse.rotCamYAxisSpeed = 3;*/
         }
         if (Input.GetKeyDown(KeyCodeReload))
         {
@@ -145,6 +141,14 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCodeGrenade))
         {
             weapon.StartGrenadeAction(0);
+        }
+        if(Input.GetKey(KeyCodeCrouch))
+        {
+            transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        }
+        else if(Input.GetKeyUp(KeyCodeCrouch))
+        {
+            transform.localScale = new Vector3(1, 1, 1);
         }
     }
 

@@ -41,6 +41,10 @@ public class RotateToMouse : MonoBehaviour
             playerStatus.walkSpeed = 15;
             playerStatus.runSpeed = 25;
         }
+        else if(Input.GetKey(KeyCode.LeftControl))
+        {
+            playerStatus.walkSpeed = 1.5f;
+        }
         else
         {
             playerStatus.walkSpeed = 3;

@@ -17,9 +17,11 @@ public class WeaponGrenade : WeaponSystem
 
     }
 
-    public override void IncreaseAmmo(int ammoAmount) { }
+    public override void IncreaseMainAmmo(int ammoAmount) { }
 
     public override void StartKnifeAction(int type = 0) { }
 
     public override void StartGrenadeAction(int type = 0) { }
+    public override void IncreaseSubAmmo(int ammoAmount)
+    { }
 }

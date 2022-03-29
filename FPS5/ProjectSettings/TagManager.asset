@@ -18,6 +18,7 @@ TagManager:
   - ExplosiveBarrel
   - ExplodedBarrel
   - EnemyCollider
+  - EnemyHead
   layers:
   - Default
   - TransparentFX
@@ -27,7 +28,7 @@ TagManager:
   - UI
   - Player
   - Casing
-  - 
+  - MiniMapCube
   - 
   - 
   - 

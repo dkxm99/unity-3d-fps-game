@@ -104,7 +104,7 @@ MonoBehaviour:
   maxHP: 100
   explosionEffectPrefab: {fileID: 6895874829463645419, guid: d320cd260360ad945b23aee5509e8567, type: 3}
   explosionDelayTime: 0.3
-  explosionRadius: 7.5
+  explosionRadius: 5
   explosionForce: 1000
   explodedBarrelPrefab: {fileID: 5191376227836740699, guid: a8c8969e8983b6b488dd86e81e653bee, type: 3}
 --- !u!1 &6176389689135606380

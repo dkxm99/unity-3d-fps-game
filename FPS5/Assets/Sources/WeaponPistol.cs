@@ -158,10 +158,22 @@ public class WeaponPistol : WeaponSystem
         float time = 0.1f;
 
         animatorController.AimModeIs = !animatorController.AimModeIs;
-        aimImage.enabled = !aimImage.enabled;
+        crossHairImage.enabled = !crossHairImage.enabled;
 
         float start = mainCamera.fieldOfView;
         float end = animatorController.AimModeIs == true ? aimFOV : defaultFOV;
+
+        if (!crossHairImage.enabled)
+        {
+            rotateToMouse.rotCamXAxisSpeed = 1.5f;
+            rotateToMouse.rotCamYAxisSpeed = 0.75f;
+        }
+        else if (crossHairImage.enabled)
+        {
+            rotateToMouse.rotCamXAxisSpeed = 4;
+            rotateToMouse.rotCamYAxisSpeed = 2;
+
+        }
 
         isModChange = true;
 
@@ -185,7 +197,7 @@ public class WeaponPistol : WeaponSystem
         {
             mainCamera.fieldOfView = defaultFOV;
             animatorController.AimModeIs = false;
-            aimImage.enabled = !aimImage.enabled;
+            crossHairImage.enabled = !crossHairImage.enabled;
         }
         StartCoroutine("OnReload");
         StartCoroutine("ReloadMode", weaponStatus.currentAmmo);
@@ -316,7 +328,7 @@ public class WeaponPistol : WeaponSystem
         {
             impactMemoryPool.SpawnImpact(hit);
 
-            if (hit.transform.CompareTag("Enemy"))
+            if (hit.collider.CompareTag("Enemy"))
             {
                 hit.rigidbody.AddForceAtPosition(new Vector3(10f, 0, 0), hit.transform.position);
                 hit.transform.GetComponent<EnemyFSM>().TakeDamage(weaponStatus.damage);
@@ -324,6 +336,10 @@ public class WeaponPistol : WeaponSystem
             else if (hit.transform.CompareTag("ExplosiveObject"))
             {
                 hit.transform.GetComponent<ExplosiveObject>().TakeDamage(weaponStatus.damage);
+            }
+            else if (hit.collider.CompareTag("EnemyHead"))
+            {
+                hit.transform.GetComponent<EnemyFSM>().TakeDamage(weaponStatus.damage + 30);
             }
         }
     }
@@ -335,7 +351,15 @@ public class WeaponPistol : WeaponSystem
         muzzleFlash.SetActive(false);
     }
 
-    public override void IncreaseAmmo(int ammoAmount)
+    public override void IncreaseMainAmmo(int ammoAmount)
+    {
+        /*weaponStatus.maxCurrentAmmo += ammoAmount;
+        playerController.grenadeAmmo += 1;
+        ammoEvent.Invoke(weaponStatus.currentAmmo, weaponStatus.maxCurrentAmmo);
+        grenadeAmmoEvent.Invoke(playerController.grenadeAmmo);*/
+    }
+
+    public override void IncreaseSubAmmo(int ammoAmount)
     {
         weaponStatus.maxCurrentAmmo += ammoAmount;
         playerController.grenadeAmmo += 1;

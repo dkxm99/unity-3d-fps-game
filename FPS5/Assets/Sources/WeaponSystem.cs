@@ -32,7 +32,7 @@ public abstract class WeaponSystem : MonoBehaviour
 
     [Header("AimUi")]
     [SerializeField]
-    public Image aimImage;
+    public Image crossHairImage;
 
     protected float lastAttackTime = 0;
     protected bool isReload = false;
@@ -51,7 +51,9 @@ public abstract class WeaponSystem : MonoBehaviour
     public abstract void StartKnifeAction(int type = 0);
 
     public abstract void StartGrenadeAction(int type = 0);
-    public abstract void IncreaseAmmo(int ammoAmount);
+    public abstract void IncreaseMainAmmo(int ammoAmount);
+
+    public abstract void IncreaseSubAmmo(int ammoAmount);
 
     protected void PlaySound(AudioClip clip)
     {

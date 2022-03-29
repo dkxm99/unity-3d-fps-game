@@ -31,13 +31,14 @@ public class EnemyFSM : MonoBehaviour
     [SerializeField]
     private float attackRate = 0.5f;
 
+    [Header("Enemy Sight Range")]
     [SerializeField]
-    private Collider collider;
+    private Collider sightCollider;
 
     private EnemyState enemyState = EnemyState.None;
     private float lastAttackTime = 0;
     private float fieldOfView = 120f;
-    public Transform col;
+    public Transform enemyHead;
     public Vector3 targetPos;
 
     private PlayerStatus status;
@@ -55,12 +56,12 @@ public class EnemyFSM : MonoBehaviour
 
      public void Awake()
      {
-         muzzleFlash.SetActive(false);
+        muzzleFlash.SetActive(false);
         status = GetComponent<PlayerStatus>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         impactMemoryPool = GetComponent<ImpactMemoryPool>();
-        col = GetComponentInChildren<Transform>();
+        enemyHead = GetComponentInChildren<Transform>();
         rigid = GetComponent<Rigidbody>();
         navMeshAgent.updateRotation = false;
         rigid.isKinematic = true;
@@ -112,7 +113,7 @@ public class EnemyFSM : MonoBehaviour
         {
             // animatorController.MoveSpeed = 0.0f;
 
-            /*animator.SetFloat("MoveSpeed", 0.0f);*/
+            //animator.SetFloat("MoveSpeed", 0.0f);
 
             /*if (animatorController.EnemyMovement != 0)
             {
@@ -292,13 +293,14 @@ public class EnemyFSM : MonoBehaviour
                 RaycastHit hit;
                 if (Physics.Raycast(transform.position, direction, out hit, 30.0f))
                 {
-                    if (hit.collider.gameObject == target)
+                    if (hit.collider.gameObject.name == "PlayerCollider")
                     {
+                        Debug.DrawRay(transform.position + transform.up, transform.forward * hit.distance, Color.red);
                         if (distance < attackRange)
                         {
                             ChangeState(EnemyState.Attack);
                         }
-                        else if (distance < pursuitMaxRange)
+                        else if (distance <= pursuitMaxRange && distance > attackRange)
                         {
                             ChangeState(EnemyState.Pursuit);
                         }
@@ -312,7 +314,7 @@ public class EnemyFSM : MonoBehaviour
     {
         animator.enabled = false;       
         StopAllCoroutines();
-        collider.enabled = false;
+        sightCollider.enabled = false;
         navMeshAgent.enabled = false;
         muzzleFlash.SetActive(false);
         rigid.isKinematic = false;
@@ -321,23 +323,36 @@ public class EnemyFSM : MonoBehaviour
     {
         float distance = Vector3.Distance(target.transform.position, transform.position);
         isDie = status.DecreaseHP(damage);
-        if (distance < pursuitMaxRange)
+        if (distance > pursuitMaxRange)
         {
-            ChangeState(EnemyState.Pursuit);
+            //ChangeState(EnemyState.Pursuit);
+            StartCoroutine("PursuitAndAttack");
         }
+        /*else if(distance < attackRange)
+        {
+            ChangeState(EnemyState.Attack);
+        }*/
         if(isDie == true)
         {
-            //gameObject.SetActive(false);
+            //gameObject.SetActive(false); // 메모리풀
             ChangeRagdoll();
-            //enemyMemoryPool.DeactivateEnemy(gameObject);
+            //enemyMemoryPool.DeactivateEnemy(gameObject); //메모리풀
             StartCoroutine("Deactive");
         }
+    }
+   
+    private IEnumerator PursuitAndAttack()
+    {
+        ChangeState(EnemyState.Pursuit);
+        yield return new WaitForSeconds(2);
+        ChangeState(EnemyState.Attack);
     }
 
     private IEnumerator Deactive()
     {
-        yield return new WaitForSeconds(5);
-        Destroy(gameObject);
+        transform.Find("Circle").gameObject.SetActive(false);
+        yield return new WaitForSeconds(4);
+        Destroy(gameObject);      
     }
 
     /*private void OnDrawGizmos()
@@ -354,7 +369,7 @@ public class EnemyFSM : MonoBehaviour
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, attackRange);
     }*/
-   /* private void OnDrawGizmos()
+    /*private void OnDrawGizmos()
     {
         Handles.color = Color.black;
         Handles.DrawWireArc(transform.position, Vector3.up, transform.forward, fieldOfView / 2, attackRange);

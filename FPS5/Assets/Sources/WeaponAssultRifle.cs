@@ -38,7 +38,7 @@ public class WeaponAssultRifle : WeaponSystem
 
     /*[Header("AimUi")]
     [SerializeField]
-    public Image aimImage;
+    public Image crossHairImage;
 
     /*private float lastAttackTime = 0;
     private bool isReload = false;
@@ -178,6 +178,12 @@ public class WeaponAssultRifle : WeaponSystem
         {
             if (isAttack == true) return;
             if (playerMovement.MoveSpeed >= 5.0f) return;
+            else if (!animatorController.AimModeIs)
+            {
+                rotateToMouse.rotCamXAxisSpeed = 5;
+                rotateToMouse.rotCamYAxisSpeed = 3;
+
+            }
             StartCoroutine("AimModeChange");
         }
     }
@@ -199,13 +205,25 @@ public class WeaponAssultRifle : WeaponSystem
         float time = 0.1f;
 
         animatorController.AimModeIs = !animatorController.AimModeIs;
-        aimImage.enabled = !aimImage.enabled;
+        crossHairImage.enabled = !crossHairImage.enabled;
 
         float start = mainCamera.fieldOfView;
         float end = animatorController.AimModeIs == true ? aimFOV : defaultFOV;
 
-        isModChange = true;
+        if(!crossHairImage.enabled)
+        {
+            rotateToMouse.rotCamXAxisSpeed = 1.5f;
+            rotateToMouse.rotCamYAxisSpeed = 0.75f;
+        }
+        else if (crossHairImage.enabled)
+        {
+            rotateToMouse.rotCamXAxisSpeed = 4;
+            rotateToMouse.rotCamYAxisSpeed = 2;
 
+        }
+
+        isModChange = true;
+   
         while (percent < 1)
         {
             current += Time.deltaTime;
@@ -213,8 +231,7 @@ public class WeaponAssultRifle : WeaponSystem
 
             mainCamera.fieldOfView = Mathf.Lerp(start, end, percent);
             yield return null;
-        }
-
+        }       
         isModChange = false;
     }
 
@@ -227,7 +244,7 @@ public class WeaponAssultRifle : WeaponSystem
         {
             mainCamera.fieldOfView = defaultFOV;
             animatorController.AimModeIs = false;
-            aimImage.enabled = !aimImage.enabled;
+            crossHairImage.enabled = !crossHairImage.enabled;
         }
         StartCoroutine("OnReload");
         StartCoroutine("ReloadMode",weaponStatus.currentAmmo);
@@ -333,7 +350,7 @@ public class WeaponAssultRifle : WeaponSystem
             if (cnt >= 8 && cnt < 16)
             {
                 rotateToMouse.eulerAngleX -= Random.Range(0.3f, 0.8f);
-                rotateToMouse.eulerAngleY += 1f;               
+                rotateToMouse.eulerAngleY += 1f; 
             }           
             else if(cnt >= 16)
             {
@@ -369,7 +386,7 @@ public class WeaponAssultRifle : WeaponSystem
         {
             impactMemoryPool.SpawnImpact(hit);
 
-            if (hit.transform.CompareTag("Enemy"))
+            if (hit.collider.CompareTag("Enemy"))
             {
                 hit.rigidbody.AddForceAtPosition(new Vector3(10f, 0, 0), hit.transform.position);
                 hit.transform.GetComponent<EnemyFSM>().TakeDamage(weaponStatus.damage);
@@ -377,6 +394,10 @@ public class WeaponAssultRifle : WeaponSystem
             else if (hit.transform.CompareTag("ExplosiveObject"))
             {
                 hit.transform.GetComponent<ExplosiveObject>().TakeDamage(weaponStatus.damage);
+            }
+            else if (hit.collider.CompareTag("EnemyHead"))
+            {
+                hit.transform.GetComponent<EnemyFSM>().TakeDamage(weaponStatus.damage + 100);
             }
         }
     }
@@ -395,13 +416,16 @@ public class WeaponAssultRifle : WeaponSystem
         audioSource.Play();
     }*/
 
-    public override void IncreaseAmmo(int ammoAmount)
+    public override void IncreaseMainAmmo(int ammoAmount)
     {
         weaponStatus.maxCurrentAmmo += ammoAmount;
         playerController.grenadeAmmo += 2;
         ammoEvent.Invoke(weaponStatus.currentAmmo, weaponStatus.maxCurrentAmmo);
         grenadeAmmoEvent.Invoke(playerController.grenadeAmmo);
     }
+
+    public override void IncreaseSubAmmo(int ammoAmount)
+    { }
 
     public void StartWeaponKnifeCollider()
     {

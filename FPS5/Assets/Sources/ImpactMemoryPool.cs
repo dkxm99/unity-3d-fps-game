@@ -32,7 +32,7 @@ public class ImpactMemoryPool : MonoBehaviour
 
     public void SpawnImpact(RaycastHit hit)
     {
-        if (hit.transform.CompareTag("Floor") || hit.transform.CompareTag("ExplosiveObject"))
+        if (hit.collider.CompareTag("Floor") || hit.transform.CompareTag("ExplosiveObject") || hit.collider.CompareTag("EnemyHead"))
         {
             OnSpawnImpact(ImpactType.Normal, hit.point, Quaternion.LookRotation(hit.normal));
         }

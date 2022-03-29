@@ -28,7 +28,7 @@ public class WeaponKnife : WeaponSystem
         weaponStatus.currentAmmo = weaponStatus.maxAmmo;
     }
 
-    public override void IncreaseAmmo(int ammoAmount) { }
+    public override void IncreaseMainAmmo(int ammoAmount) { }
 
 
     public override void StartWeaponAction(int type = 0) { }
@@ -87,6 +87,8 @@ public class WeaponKnife : WeaponSystem
         }
         //PlaySound(audioClipFire);
     }
+    public override void IncreaseSubAmmo(int ammoAmount)
+    { }
 
     public void StartWeaponKnifeCollider()
     {
