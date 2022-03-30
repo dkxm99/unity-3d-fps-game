@@ -55,5 +55,4 @@ public class AmmoSupplyObject : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
 }

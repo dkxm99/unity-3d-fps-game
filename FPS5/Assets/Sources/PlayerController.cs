@@ -209,7 +209,7 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator GameOver()
     {     
-        for (int i = 0; i < 4; ++i)
+        for (int i = 0; i < 3; ++i)
         {
             transform.GetChild(0).GetChild(i).gameObject.SetActive(false);
         }
