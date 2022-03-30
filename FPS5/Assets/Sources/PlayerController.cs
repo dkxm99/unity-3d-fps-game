@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("Input KeyCode")]
-    [SerializeField]
     private KeyCode KeyCodeRun = KeyCode.LeftShift;
     private KeyCode KeyCodeJump = KeyCode.Space;
     private KeyCode KeyCodeReload = KeyCode.R;
     private KeyCode KeyCodeKnife = KeyCode.V;
     private KeyCode KeyCodeGrenade = KeyCode.G;
     private KeyCode KeyCodeCrouch = KeyCode.LeftControl;
+    private KeyCode KeyCodeLeanLeft = KeyCode.Q;
+    private KeyCode KeyCodeLeanRight = KeyCode.E;
+
 
     [Header("Audio Clips")]
     [SerializeField]
@@ -28,7 +29,18 @@ public class PlayerController : MonoBehaviour
     private WeaponSystem weapon;
     public GameObject gameOverMenu;
 
+    private float speed = 0.2f;
     public int grenadeAmmo = 3;
+
+    [Header("Leaning Objects")]
+    [SerializeField]
+    private Transform playerCamera;
+    [SerializeField]
+    private Transform LeanLeft;
+    [SerializeField]
+    private Transform LeanRight;
+    [SerializeField]
+    private Transform idle;
 
     private void Awake()
     {
@@ -75,9 +87,27 @@ public class PlayerController : MonoBehaviour
             if (v > 0 && playerMovement.MoveSpeed > 1.5f) isRun = Input.GetKey(KeyCodeRun);
             if (isRun == true && weapon.AnimatorController.AimModeIs == true)
             {
+                rotateToMouse.rotCamXAxisSpeed = 4;
+                rotateToMouse.rotCamYAxisSpeed = 2;
                 weapon.AnimatorController.AimModeIs = false;
                 weapon.mainCamera.fieldOfView = weapon.defaultFOV;
                 weapon.crossHairImage.enabled = !weapon.crossHairImage.enabled;
+            }
+
+            if ((h == 0) && (rotateToMouse.eulerAngleX >= 75 && rotateToMouse.eulerAngleX <= 85) || 
+                (rotateToMouse.eulerAngleX >= -85 && rotateToMouse.eulerAngleX <= -75))
+            {
+                playerStatus.walkSpeed = 15;
+                playerStatus.runSpeed = 30;
+            }
+            else if (Input.GetKey(KeyCode.LeftControl))
+            {
+                playerStatus.walkSpeed = 1.5f;
+            }
+            else
+            {
+                playerStatus.walkSpeed = 3;
+                playerStatus.runSpeed = 5;
             }
 
             playerMovement.MoveSpeed = isRun == true ? playerStatus.RunSpeed : playerStatus.WalkSpeed;
@@ -150,6 +180,21 @@ public class PlayerController : MonoBehaviour
         {
             transform.localScale = new Vector3(1, 1, 1);
         }
+        if (Input.GetKey(KeyCodeLeanLeft))
+        {
+            playerCamera.position = Vector3.Lerp(playerCamera.position, LeanLeft.position, speed);
+            playerCamera.rotation = Quaternion.Lerp(playerCamera.rotation, LeanLeft.rotation, speed);          
+        }
+        else if (Input.GetKey(KeyCodeLeanRight))
+        {
+            playerCamera.position = Vector3.Lerp(playerCamera.position, LeanRight.position, speed);
+            playerCamera.rotation = Quaternion.Lerp(playerCamera.rotation, LeanRight.rotation, speed);                     
+        }
+        else
+        {
+            playerCamera.position = Vector3.Lerp(playerCamera.position, idle.position, speed);
+            playerCamera.rotation = Quaternion.Lerp(playerCamera.rotation, idle.rotation, speed);
+        }
     }
 
     public void TakeDamage(int damage)
@@ -163,10 +208,10 @@ public class PlayerController : MonoBehaviour
     }
 
     private IEnumerator GameOver()
-    {
-        for (int i = 1; i < 5; ++i)
+    {     
+        for (int i = 0; i < 4; ++i)
         {
-            transform.GetChild(i).gameObject.SetActive(false);
+            transform.GetChild(0).GetChild(i).gameObject.SetActive(false);
         }
         yield return new WaitForSeconds(1);
         gameOverMenu.SetActive(true);      

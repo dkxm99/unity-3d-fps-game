@@ -163,16 +163,15 @@ public class WeaponPistol : WeaponSystem
         float start = mainCamera.fieldOfView;
         float end = animatorController.AimModeIs == true ? aimFOV : defaultFOV;
 
-        if (!crossHairImage.enabled)
+        if (end == aimFOV)
         {
             rotateToMouse.rotCamXAxisSpeed = 1.5f;
             rotateToMouse.rotCamYAxisSpeed = 0.75f;
         }
-        else if (crossHairImage.enabled)
+        else if (end == defaultFOV)
         {
             rotateToMouse.rotCamXAxisSpeed = 4;
             rotateToMouse.rotCamYAxisSpeed = 2;
-
         }
 
         isModChange = true;

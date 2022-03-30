@@ -66,6 +66,7 @@ public class EnemyFSM : MonoBehaviour
         navMeshAgent.updateRotation = false;
         rigid.isKinematic = true;
 
+        StartCoroutine("EnemyCantWaitForYou");
         //this.target = target;
         //this.enemyMemoryPool = enemyMemoryPool;
      }
@@ -353,6 +354,12 @@ public class EnemyFSM : MonoBehaviour
         transform.Find("Circle").gameObject.SetActive(false);
         yield return new WaitForSeconds(4);
         Destroy(gameObject);      
+    }
+
+    private IEnumerator EnemyCantWaitForYou()
+    {
+        yield return new WaitForSeconds(300);
+        ChangeState(EnemyState.Pursuit);
     }
 
     /*private void OnDrawGizmos()

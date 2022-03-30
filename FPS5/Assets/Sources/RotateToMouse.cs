@@ -36,7 +36,7 @@ public class RotateToMouse : MonoBehaviour
         if (angle < -360) angle += 360;
         if (angle > 360) angle -= 360;
 
-        if((angle >= 75 && angle <= 85) || (angle >= -85 && angle <= -75))
+        /*if((angle >= 75 && angle <= 85) || (angle >= -85 && angle <= -75))
         {
             playerStatus.walkSpeed = 15;
             playerStatus.runSpeed = 25;
@@ -49,7 +49,7 @@ public class RotateToMouse : MonoBehaviour
         {
             playerStatus.walkSpeed = 3;
             playerStatus.runSpeed = 5;
-        }
+        }*/
         return Mathf.Clamp(angle, min, max);
     }
 }

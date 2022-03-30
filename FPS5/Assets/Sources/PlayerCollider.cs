@@ -13,8 +13,8 @@ public class PlayerCollider : MonoBehaviour
 
         if (other.CompareTag("AmmoSupply"))
         {
-            other.GetComponent<AmmoSupplyObject>().useAmmoSupply(transform.parent.GetChild(1).gameObject);
-            other.GetComponent<AmmoSupplyObject>().useAmmoSupply(transform.parent.GetChild(2).gameObject);
+            other.GetComponent<AmmoSupplyObject>().useAmmoSupply(transform.parent.GetChild(0).GetChild(0).gameObject);
+            other.GetComponent<AmmoSupplyObject>().useAmmoSupply(transform.parent.GetChild(0).GetChild(1).gameObject);
         }
     }
 }
