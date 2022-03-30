@@ -84,6 +84,7 @@ public class WeaponAssultRifle : WeaponSystem
     {
         PlaySound(audioClipTakeOutWeapon);
         muzzleFlash.SetActive(false);
+        Camera.main.fieldOfView = defaultFOV;
         ammoEvent.Invoke(weaponStatus.currentAmmo, weaponStatus.maxCurrentAmmo);
         grenadeAmmoEvent.Invoke(playerController.grenadeAmmo);
         ResetVariables();

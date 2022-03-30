@@ -15,11 +15,12 @@ public class WeaponSwitchingSystem : MonoBehaviour
 
     private WeaponSystem currentWeapon;
     private WeaponSystem previousWeapon;
+    private RotateToMouse rotateToMouse;
 
     private void Awake()
     {
         playerHUD.SetupAllWeapon(weapons);
-
+        rotateToMouse = GetComponent<RotateToMouse>();
         for (int i = 0; i < weapons.Length; ++i)
         {
             if (weapons[i].gameObject != null)
@@ -43,6 +44,9 @@ public class WeaponSwitchingSystem : MonoBehaviour
         if (int.TryParse(Input.inputString, out inputIndex) && (inputIndex > 0) && inputIndex < 3)
         {
             SwitchingWeapon((WeaponType)(inputIndex - 1));
+            currentWeapon.crossHairImage.enabled = true;
+            rotateToMouse.rotCamXAxisSpeed = 4;
+            rotateToMouse.rotCamYAxisSpeed = 2;
         }
     }
 

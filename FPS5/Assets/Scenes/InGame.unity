@@ -5145,7 +5145,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1576021176}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &147250187
 PrefabInstance:
@@ -7811,7 +7811,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1576021176}
-  m_RootOrder: 4
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -20}
 --- !u!4 &268958841 stripped
 Transform:
@@ -23695,7 +23695,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1576021176}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 20}
 --- !u!4 &846818158 stripped
 Transform:
@@ -25707,7 +25707,6 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   textEnemyCount: {fileID: 2086747488}
-  enemies: {fileID: 0}
 --- !u!4 &908186266
 Transform:
   m_ObjectHideFlags: 0
@@ -36348,10 +36347,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clearMenu: {fileID: 159581437}
-  enemies: {fileID: 1501147810}
+  enemies: {fileID: 1256471284}
   enemyCountEvent:
     m_PersistentCalls:
       m_Calls: []
+  playerHUD: {fileID: 908186265}
 --- !u!1001 &1265842853
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42472,7 +42472,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1501147811}
   m_Layer: 5
-  m_Name: Enemies
+  m_Name: LeftEnemies
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -53,6 +53,7 @@ public class WeaponPistol : WeaponSystem
     {
         PlaySound(audioClipTakeOutWeapon);
         muzzleFlash.SetActive(false);
+        Camera.main.fieldOfView = defaultFOV;
         ammoEvent.Invoke(weaponStatus.currentAmmo, weaponStatus.maxCurrentAmmo);
         ResetVariables();
     }
