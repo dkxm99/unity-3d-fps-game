@@ -31,7 +31,6 @@ public class WeaponPistol : WeaponSystem
     private PlayerMovement playerMovement;
     private ThrowGrenade throwGrenade;
     private RotateToMouse rotateToMouse;
-    private WeaponAssultRifle weaponAssultRifle;
     private PlayerController playerController;
 
     [SerializeField]
@@ -296,8 +295,16 @@ public class WeaponPistol : WeaponSystem
             StartCoroutine("OnMuzzleFlash");
             PlaySound(audioClipFire);
 
-            rotateToMouse.eulerAngleX -= 1.0f;
-            rotateToMouse.eulerAngleY += 0.2f;
+            if (!isCrouch)
+            {
+                rotateToMouse.eulerAngleX -= 1.0f;
+                rotateToMouse.eulerAngleY += 0.2f;
+            }
+            else if(isCrouch)
+            {
+                rotateToMouse.eulerAngleX -= 0.5f;
+                rotateToMouse.eulerAngleY += 0.1f;
+            }
 
             casingMemoryPool.SpawnCasing(casingSpawnPoint.position, transform.right);
 

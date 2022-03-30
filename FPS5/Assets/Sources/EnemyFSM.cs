@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEngine.AI;
 
 public enum EnemyState { None = -1, Idle = 0, Wander, Pursuit, Attack, Hit, }
+
 public class EnemyFSM : MonoBehaviour
 {
     [Header("Fire Effect")]

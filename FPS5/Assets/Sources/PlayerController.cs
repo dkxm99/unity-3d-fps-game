@@ -102,7 +102,7 @@ public class PlayerController : MonoBehaviour
             }
             else if (Input.GetKey(KeyCode.LeftControl))
             {
-                playerStatus.walkSpeed = 1.5f;
+                playerStatus.walkSpeed = 1;
             }
             else
             {
@@ -175,10 +175,12 @@ public class PlayerController : MonoBehaviour
         if(Input.GetKey(KeyCodeCrouch))
         {
             transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            weapon.isCrouch = true;
         }
         else if(Input.GetKeyUp(KeyCodeCrouch))
         {
             transform.localScale = new Vector3(1, 1, 1);
+            weapon.isCrouch = false;
         }
         if (Input.GetKey(KeyCodeLeanLeft))
         {

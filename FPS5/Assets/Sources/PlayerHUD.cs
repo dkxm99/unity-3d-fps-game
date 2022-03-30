@@ -9,6 +9,8 @@ public class PlayerHUD : MonoBehaviour
     [Header("Components")]
     [SerializeField]
     private PlayerStatus status;
+    [SerializeField]
+    private ManageGame manageGame;
 
     [Header("Weapon Base")]
     [SerializeField]
@@ -35,6 +37,10 @@ public class PlayerHUD : MonoBehaviour
     [SerializeField]
     private AnimationCurve curveBloodScreen;
 
+    [Header("EnemyCount")]
+    [SerializeField]
+    private TextMeshProUGUI textEnemyCount;
+
     private WeaponSystem weapon;
 
     private void Awake()
@@ -43,6 +49,7 @@ public class PlayerHUD : MonoBehaviour
         status.hpEvent.AddListener(UpdateHpHUD);
         weapon.ammoEvent.AddListener(UpdateAmmoHUD);
         weapon.grenadeAmmoEvent.AddListener(UpdateGrenadeAmmoHUD);
+        manageGame.enemyCountEvent.AddListener(UpdateEnemyCountHUD);
     }
 
     public void SetupAllWeapon(WeaponSystem[] weapons)
@@ -52,6 +59,11 @@ public class PlayerHUD : MonoBehaviour
             weapons[i].ammoEvent.AddListener(UpdateAmmoHUD);
             weapons[i].grenadeAmmoEvent.AddListener(UpdateGrenadeAmmoHUD);
         }
+    }
+    
+    public void SetupEnemyCount()
+    {
+        manageGame.enemyCountEvent.AddListener(UpdateEnemyCountHUD);
     }
 
     public void SwitchingWeapon(WeaponSystem newWeapon)
@@ -79,6 +91,11 @@ public class PlayerHUD : MonoBehaviour
     private void UpdateGrenadeAmmoHUD(int grenadeAmmo)
     {
         textGrenadeAmmo.text = $"<size=30>{grenadeAmmo}";
+    }
+
+    private void UpdateEnemyCountHUD(int enemies)
+    {
+        textEnemyCount.text = $"<size=30>{enemies}";
     }
 
     private void UpdateHpHUD(int previous, int current)

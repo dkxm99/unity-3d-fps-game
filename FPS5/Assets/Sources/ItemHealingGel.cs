@@ -18,7 +18,7 @@ public class ItemHealingGel : MonoBehaviour
     {
         float y = transform.position.y;
 
-        while(true)
+        while (true)
         {
             transform.Rotate(Vector3.up * rotateSpeed * Time.deltaTime);
 

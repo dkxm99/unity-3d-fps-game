@@ -36,6 +36,7 @@ public abstract class WeaponSystem : MonoBehaviour
 
     protected float lastAttackTime = 0;
     protected bool isReload = false;
+    public bool isCrouch = false;
     protected bool isAttack = false;
     protected bool isKnifeAttack = false;
     protected bool isGrenadeThrow = false;

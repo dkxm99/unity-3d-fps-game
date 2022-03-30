@@ -56,7 +56,6 @@ public class WeaponAssultRifle : WeaponSystem
 
     public int cnt = 0;
 
-
     /*[HideInInspector]
     public float defaultFOV = 60;
     public float aimFOV = 30;
@@ -178,12 +177,6 @@ public class WeaponAssultRifle : WeaponSystem
         {
             if (isAttack == true) return;
             if (playerMovement.MoveSpeed >= 5.0f) return;
-            else if (!animatorController.AimModeIs)
-            {
-                rotateToMouse.rotCamXAxisSpeed = 5;
-                rotateToMouse.rotCamYAxisSpeed = 3;
-
-            }
             StartCoroutine("AimModeChange");
         }
     }
@@ -236,14 +229,14 @@ public class WeaponAssultRifle : WeaponSystem
 
     public override void StartReload()
     {
-        rotateToMouse.rotCamXAxisSpeed = 4;
-        rotateToMouse.rotCamYAxisSpeed = 2;
         if (isReload == true || weaponStatus.currentAmmo >= weaponStatus.maxAmmo || weaponStatus.maxCurrentAmmo <= 0) return;
         isModChange = false;
         StopWeaponAction();
         if (animatorController.AimModeIs == true)
         {
             mainCamera.fieldOfView = defaultFOV;
+            rotateToMouse.rotCamXAxisSpeed = 4;
+            rotateToMouse.rotCamYAxisSpeed = 2;
             animatorController.AimModeIs = false;
             crossHairImage.enabled = !crossHairImage.enabled;
         }
@@ -344,19 +337,39 @@ public class WeaponAssultRifle : WeaponSystem
             PlaySound(audioClipFire);
 
             cnt++;
-            if (cnt < 8)
+            if (!isCrouch)
             {
-                rotateToMouse.eulerAngleX -= Random.Range(1.0f, 1.5f);
+                if (cnt < 8)
+                {
+                    rotateToMouse.eulerAngleX -= Random.Range(1.0f, 1.5f);
+                }
+                if (cnt >= 8 && cnt < 16)
+                {
+                    rotateToMouse.eulerAngleX -= Random.Range(0.3f, 0.8f);
+                    rotateToMouse.eulerAngleY += 1f;
+                }
+                else if (cnt >= 16)
+                {
+                    rotateToMouse.eulerAngleX -= Random.Range(0.3f, 0.8f);
+                    rotateToMouse.eulerAngleY -= 0.5f;
+                }
             }
-            if (cnt >= 8 && cnt < 16)
+            else if(isCrouch)
             {
-                rotateToMouse.eulerAngleX -= Random.Range(0.3f, 0.8f);
-                rotateToMouse.eulerAngleY += 1f; 
-            }           
-            else if(cnt >= 16)
-            {
-                rotateToMouse.eulerAngleX -= Random.Range(0.3f, 0.8f);
-                rotateToMouse.eulerAngleY -= 0.5f;
+                if (cnt < 8)
+                {
+                    rotateToMouse.eulerAngleX -= Random.Range(0.5f, 0.75f);
+                }
+                if (cnt >= 8 && cnt < 16)
+                {
+                    rotateToMouse.eulerAngleX -= Random.Range(0.15f, 0.4f);
+                    rotateToMouse.eulerAngleY += 0.5f;
+                }
+                else if (cnt >= 16)
+                {
+                    rotateToMouse.eulerAngleX -= Random.Range(0.15f, 0.4f);
+                    rotateToMouse.eulerAngleY -= 0.25f;
+                }
             }
 
             casingMemoryPool.SpawnCasing(casingSpawnPoint.position, transform.right);
