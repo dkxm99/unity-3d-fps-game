@@ -5153,7 +5153,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1576021176}
-  m_RootOrder: 1
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &147250187
 PrefabInstance:
@@ -7819,7 +7819,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1576021176}
-  m_RootOrder: 4
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -15}
 --- !u!4 &268958841 stripped
 Transform:
@@ -13758,6 +13758,36 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4000013149834228, guid: 6857ff1d3761e21479727f3b27cc8f68, type: 3}
   m_PrefabInstance: {fileID: 462383387}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &463580516
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 463580517}
+  m_Layer: 6
+  m_Name: HitRight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &463580517
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 463580516}
+  m_LocalRotation: {x: 0, y: 0, z: -0.3420201, w: 0.9396927}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1576021176}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -40}
 --- !u!1001 &465618422
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23743,7 +23773,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1576021176}
-  m_RootOrder: 2
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 15}
 --- !u!4 &846818158 stripped
 Transform:
@@ -26804,6 +26834,36 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4000012771108642, guid: 9d1bb44d500a3ad489d3cb3a6900199f, type: 3}
   m_PrefabInstance: {fileID: 953742852}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &953852729
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 953852730}
+  m_Layer: 6
+  m_Name: HitLeft
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &953852730
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953852729}
+  m_LocalRotation: {x: 0, y: 0, z: 0.3420201, w: 0.9396927}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1576021176}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 40}
 --- !u!1001 &954166558
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -60461,9 +60521,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1576021176}
     - target: {fileID: 8582726160000968263, guid: 9f75462b22d9b2241abdaca3d9d0fc0d, type: 3}
+      propertyPath: HitLeft
+      value: 
+      objectReference: {fileID: 953852730}
+    - target: {fileID: 8582726160000968263, guid: 9f75462b22d9b2241abdaca3d9d0fc0d, type: 3}
       propertyPath: weapons
       value: 
       objectReference: {fileID: 936988442}
+    - target: {fileID: 8582726160000968263, guid: 9f75462b22d9b2241abdaca3d9d0fc0d, type: 3}
+      propertyPath: HitRight
+      value: 
+      objectReference: {fileID: 463580517}
     - target: {fileID: 8582726160000968263, guid: 9f75462b22d9b2241abdaca3d9d0fc0d, type: 3}
       propertyPath: LeanLeft
       value: 
@@ -60530,7 +60598,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8582726160137382340, guid: 9f75462b22d9b2241abdaca3d9d0fc0d, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8582726160137382341, guid: 9f75462b22d9b2241abdaca3d9d0fc0d, type: 3}
       propertyPath: m_TagString

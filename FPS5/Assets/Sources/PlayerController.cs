@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     private PlayerMovement playerMovement;
     private RotateToMouse rotateToMouse;
     private PlayerStatus playerStatus;
-    //private AnimatorController animatorController;
+    private AnimatorController animatorController;
     private AudioSource audioSource;
     //private WeaponAssultRifle weapon;
     private WeaponSystem weapon;
@@ -42,6 +42,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private Transform idle;
 
+    [SerializeField]
+    private Transform HitLeft;
+    [SerializeField]
+    private Transform HitRight;
+
     private void Awake()
     {
         Cursor.visible = false;
@@ -49,7 +54,7 @@ public class PlayerController : MonoBehaviour
         rotateToMouse = GetComponent<RotateToMouse>();
         playerMovement = GetComponent<PlayerMovement>();
         playerStatus = GetComponent<PlayerStatus>();
-        //animatorController = GetComponent<AnimatorController>();
+        animatorController = GetComponent<AnimatorController>();
         audioSource = GetComponent<AudioSource>();
         //weapon = GetComponentInChildren<WeaponAssultRifle>();
         //weaponSystem = GetComponentInChildren<WeaponSystem>();
@@ -199,34 +204,22 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void hitByEnemy()
+    private void HitByEnemy()
     {
-        int a = Random.Range(0, 3);
+        int a = Random.Range(0, 2);
         if (a == 0)
         {
-            rotateToMouse.eulerAngleX += Random.Range(1, 3);
-            rotateToMouse.eulerAngleY += Random.Range(1, 3);
+            playerCamera.rotation = Quaternion.Lerp(playerCamera.rotation, HitRight.rotation, speed);
         }
         else if (a == 1)
         {
-            rotateToMouse.eulerAngleX -= Random.Range(1, 3);
-            rotateToMouse.eulerAngleY -= Random.Range(1, 3);
-        }
-        else if (a == 2)
-        {
-            rotateToMouse.eulerAngleX += Random.Range(1, 3);
-            rotateToMouse.eulerAngleY -= Random.Range(1, 3);
-        }
-        else if (a == 3)
-        {
-            rotateToMouse.eulerAngleX -= Random.Range(1, 3);
-            rotateToMouse.eulerAngleY += Random.Range(1, 3);
+            playerCamera.rotation = Quaternion.Lerp(playerCamera.rotation, HitLeft.rotation, speed);
         }
     }
 
     public void TakeDamage(int damage)
     {
-        hitByEnemy();
+        HitByEnemy();
         bool isDie = playerStatus.DecreaseHP(damage);
         if (isDie == true)
         {
