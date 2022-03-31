@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
     private WeaponSystem weapon;
     public GameObject gameOverMenu;
 
-    private float speed = 0.2f;
+    private float speed = 0.1f;
     public int grenadeAmmo = 3;
 
     [Header("Leaning Objects")]
@@ -138,7 +138,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCodeJump))
         {
-            playerMovement.Jump();
+            playerMovement.Jump();         
         }
     }
 
@@ -174,7 +174,7 @@ public class PlayerController : MonoBehaviour
         }
         if(Input.GetKey(KeyCodeCrouch))
         {
-            transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            transform.localScale = Vector3.Lerp(transform.localScale, new Vector3(0.5f, 0.5f, 0.5f), 5f * Time.deltaTime);
             weapon.isCrouch = true;
         }
         else if(Input.GetKeyUp(KeyCodeCrouch))
@@ -199,8 +199,34 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void hitByEnemy()
+    {
+        int a = Random.Range(0, 3);
+        if (a == 0)
+        {
+            rotateToMouse.eulerAngleX += Random.Range(1, 3);
+            rotateToMouse.eulerAngleY += Random.Range(1, 3);
+        }
+        else if (a == 1)
+        {
+            rotateToMouse.eulerAngleX -= Random.Range(1, 3);
+            rotateToMouse.eulerAngleY -= Random.Range(1, 3);
+        }
+        else if (a == 2)
+        {
+            rotateToMouse.eulerAngleX += Random.Range(1, 3);
+            rotateToMouse.eulerAngleY -= Random.Range(1, 3);
+        }
+        else if (a == 3)
+        {
+            rotateToMouse.eulerAngleX -= Random.Range(1, 3);
+            rotateToMouse.eulerAngleY += Random.Range(1, 3);
+        }
+    }
+
     public void TakeDamage(int damage)
     {
+        hitByEnemy();
         bool isDie = playerStatus.DecreaseHP(damage);
         if (isDie == true)
         {

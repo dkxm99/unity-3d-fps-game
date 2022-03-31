@@ -325,15 +325,15 @@ public class EnemyFSM : MonoBehaviour
     {
         float distance = Vector3.Distance(target.transform.position, transform.position);
         isDie = status.DecreaseHP(damage);
-        if (distance > pursuitMaxRange)
+        if (distance > attackRange)
         {
-            //ChangeState(EnemyState.Pursuit);
-            StartCoroutine("PursuitAndAttack");
+            ChangeState(EnemyState.Pursuit);
+            //StartCoroutine("PursuitAndAttack");
         }
-        /*else if(distance < attackRange)
+        else if(distance < attackRange)
         {
             ChangeState(EnemyState.Attack);
-        }*/
+        }
         if(isDie == true)
         {
             //gameObject.SetActive(false); // 메모리풀
@@ -343,12 +343,12 @@ public class EnemyFSM : MonoBehaviour
         }
     }
    
-    private IEnumerator PursuitAndAttack()
+    /*private IEnumerator PursuitAndAttack()
     {
         ChangeState(EnemyState.Pursuit);
         yield return new WaitForSeconds(2);
         ChangeState(EnemyState.Attack);
-    }
+    }*/
 
     private IEnumerator Deactive()
     {

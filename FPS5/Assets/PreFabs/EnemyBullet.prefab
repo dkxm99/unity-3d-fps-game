@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8587579715819579909}
   - component: {fileID: 8594272389845269583}
   - component: {fileID: 8605996970958610259}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 8589257428850352887}
   - component: {fileID: 8502328443671232229}
   - component: {fileID: 8500969191257935981}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4966,7 +4966,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8589037919294698601}
   - component: {fileID: 8521734028767510611}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Point light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5078,8 +5078,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8592708670010275483}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 0.025}
+  m_LocalPosition: {x: 0, y: -36, z: 0}
+  m_LocalScale: {x: 0.03, y: 0.03, z: 0}
   m_Children:
   - {fileID: 8587579715819579909}
   - {fileID: 8589257428850352887}

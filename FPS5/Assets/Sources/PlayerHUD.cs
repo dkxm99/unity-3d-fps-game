@@ -95,12 +95,19 @@ public class PlayerHUD : MonoBehaviour
 
     private void UpdateEnemyCountHUD(int enemies)
     {
-        textEnemyCount.text = $"<size=30>{enemies}";
+        textEnemyCount.text = $"Left: {enemies}";
     }
 
     private void UpdateHpHUD(int previous, int current)
-    {
-        textHP.text = "HP" + current;
+    {      
+        if(current <= 30)
+        {
+            textHP.text = $"HP <color=#ff0000>{current}";
+        }
+        else
+        {
+            textHP.text = "HP" + current;
+        }
 
         if (previous <= current)
         {
@@ -141,7 +148,7 @@ public class PlayerHUD : MonoBehaviour
             percent += Time.deltaTime;
 
             Color color = imageBloodScreen.color;
-            color.a = Mathf.Lerp(1, 0, curveBloodScreen.Evaluate(percent));
+            color.a = Mathf.Lerp(0.2f, 0, curveBloodScreen.Evaluate(percent));
             imageBloodScreen.color = color;
 
             yield return null;

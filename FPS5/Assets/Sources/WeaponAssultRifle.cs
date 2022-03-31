@@ -196,7 +196,7 @@ public class WeaponAssultRifle : WeaponSystem
     {
         float current = 0;
         float percent = 0;
-        float time = 0.1f;
+        float time = 0.3f;
 
         animatorController.AimModeIs = !animatorController.AimModeIs;
         crossHairImage.enabled = !crossHairImage.enabled;
