@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     private PlayerMovement playerMovement;
     private RotateToMouse rotateToMouse;
     private PlayerStatus playerStatus;
-    private AnimatorController animatorController;
+    //private AnimatorController animatorController;
     private AudioSource audioSource;
     //private WeaponAssultRifle weapon;
     private WeaponSystem weapon;
@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
         rotateToMouse = GetComponent<RotateToMouse>();
         playerMovement = GetComponent<PlayerMovement>();
         playerStatus = GetComponent<PlayerStatus>();
-        animatorController = GetComponent<AnimatorController>();
+        //animatorController = GetComponent<AnimatorController>();
         audioSource = GetComponent<AudioSource>();
         //weapon = GetComponentInChildren<WeaponAssultRifle>();
         //weaponSystem = GetComponentInChildren<WeaponSystem>();
@@ -97,6 +97,7 @@ public class PlayerController : MonoBehaviour
                 weapon.AnimatorController.AimModeIs = false;
                 weapon.mainCamera.fieldOfView = weapon.defaultFOV;
                 weapon.crossHairImage.enabled = !weapon.crossHairImage.enabled;
+
             }
 
             if ((h == 0) && (rotateToMouse.eulerAngleX >= 75 && rotateToMouse.eulerAngleX <= 85) || 
@@ -116,7 +117,19 @@ public class PlayerController : MonoBehaviour
             }
 
             playerMovement.MoveSpeed = isRun == true ? playerStatus.RunSpeed : playerStatus.WalkSpeed;
-            weapon.AnimatorController.MoveSpeed = isRun == true ? 1 : 0.5f;
+            if(isRun == true)
+            {
+                weapon.AnimatorController.MoveSpeed += Mathf.Lerp(0, 0.5f, 0.1f);
+                if(weapon.AnimatorController.MoveSpeed > 1)
+                {
+                    weapon.AnimatorController.MoveSpeed = 1;
+                }
+            }
+            else
+            {
+                weapon.AnimatorController.MoveSpeed = 0.5f;
+            }
+            //weapon.AnimatorController.MoveSpeed = isRun == true ? 1 : 0.5f;
             audioSource.clip = isRun == true ? audioClipRun : audioClipWalk;
 
             if (audioSource.isPlaying == false)
@@ -143,7 +156,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCodeJump))
         {
-            playerMovement.Jump();         
+            playerMovement.Jump();
         }
     }
 
