@@ -29,6 +29,7 @@ public class WeaponSwitchingSystem : MonoBehaviour
             }
         }
         SwitchingWeapon(WeaponType.Main);
+        //SwitchingWeapon(WeaponType.Sub);
     }
 
     private void Update()

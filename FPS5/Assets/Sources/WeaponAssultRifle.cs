@@ -28,6 +28,8 @@ public class WeaponAssultRifle : WeaponSystem
     private AudioClip[] audioClipReload;
     [SerializeField]
     private AudioClip audioClipAim;
+    [SerializeField]
+    private AudioClip audioClipKnife;
 
     [SerializeField]
     private WeaponKnifeCollider weaponKnifeCollider;
@@ -124,7 +126,6 @@ public class WeaponAssultRifle : WeaponSystem
             }
             yield return null;
         }
-        //PlaySound(audioClipFire);
     }
 
     public override void StartKnifeAction(int type = 0)
@@ -136,12 +137,13 @@ public class WeaponAssultRifle : WeaponSystem
     private IEnumerator OnKnifeAttack(int type)
     {
         weaponKnifeCollider.weapons = 0;
-
+        StartWeaponKnifeCollider();
         isKnifeAttack = true;
 
         animatorController.SetFloat("attackType", type);
 
         animatorController.Play("Knife", -1, 0);
+        PlaySound(audioClipKnife);
 
         yield return new WaitForEndOfFrame();
 

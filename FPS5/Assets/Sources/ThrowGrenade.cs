@@ -18,7 +18,7 @@ public class ThrowGrenade : MonoBehaviour
     }
     private IEnumerator SpawnGrenade()
     {       
-        yield return new WaitForSeconds(0.4f);  
+        yield return new WaitForSeconds(1f);  
         Instantiate(grenade, spawnPoint.position, Quaternion.identity);  
     }
 }

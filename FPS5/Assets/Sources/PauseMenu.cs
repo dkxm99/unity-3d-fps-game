@@ -26,7 +26,7 @@ public class PauseMenu : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene("InGame");
+        SceneManager.LoadScene("Daylight");
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         Time.timeScale = 1f;

@@ -94,10 +94,10 @@ public class GrenadeScript : MonoBehaviour {
 				//Toggle "explode" on explosive barrel object
 				hit.transform.GetComponent<ExplosiveObject>().TakeDamage(100);
 			}
+			Destroy(gameObject);
 		}
 
-		//Destroy the grenade object on explosion
-		Destroy (gameObject);
+		//Destroy the grenade object on explosion		
 	}
 }
 // ----- Low Poly FPS Pack Free Version -----
